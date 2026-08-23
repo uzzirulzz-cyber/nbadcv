@@ -327,14 +327,14 @@ export const AdminDashboard: React.FC = () => {
       {/* ============================================
           ROW 1 — KEY METRICS
           ============================================ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
         {/* Revenue Trend — spans wider */}
-        <div className="admin-card p-5 lg:col-span-6">
+        <div className="admin-card p-4 lg:col-span-6">
           <div className="flex items-start justify-between mb-3">
             <div>
               <div className="flex items-center gap-2">
                 <TrendingUp className="w-4 h-4 text-blue-400" />
-                <h3 className="text-sm font-semibold text-white">Revenue Trend</h3>
+                <h3 className="text-sm font-semibold text-white">Revenue Overview</h3>
               </div>
               <p className="text-[11px] text-gray-500 mt-0.5 font-mono">Live 14-Day Cycle</p>
             </div>
@@ -348,8 +348,8 @@ export const AdminDashboard: React.FC = () => {
               <AreaChart data={revenueData} margin={{ top: 5, right: 5, bottom: 0, left: -10 }}>
                 <defs>
                   <linearGradient id="revGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#3b82f6" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="#3b82f6" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#facc15" stopOpacity={0.42} />
+                    <stop offset="100%" stopColor="#facc15" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
@@ -375,16 +375,16 @@ export const AdminDashboard: React.FC = () => {
                     color: '#f9fafb',
                   }}
                   labelStyle={{ color: '#9ca3af', fontFamily: 'JetBrains Mono', fontSize: 10 }}
-                  formatter={(value: any) => [`$${value}`, 'Revenue']}
+                  formatter={(value: any) => [`Rs ${value.toLocaleString()}`, 'Revenue']}
                 />
                 <Area
                   type="monotone"
                   dataKey="revenue"
-                  stroke="#3b82f6"
+                  stroke="#facc15"
                   strokeWidth={2.5}
                   fill="url(#revGrad)"
                   dot={false}
-                  activeDot={{ r: 4, fill: '#3b82f6', stroke: '#fff', strokeWidth: 2 }}
+                  activeDot={{ r: 4, fill: '#facc15', stroke: '#fff', strokeWidth: 2 }}
                 />
               </AreaChart>
             </ResponsiveContainer>
@@ -392,7 +392,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Order Breakdown — donut */}
-        <div className="admin-card p-5 lg:col-span-3">
+        <div className="admin-card p-4 lg:col-span-3">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 text-blue-400" />
@@ -416,7 +416,7 @@ export const AdminDashboard: React.FC = () => {
                   cy={donutSize / 2}
                   r={donutRadius}
                   fill="none"
-                  stroke="#3b82f6"
+                  stroke="#facc15"
                   strokeWidth={donutStroke}
                   strokeLinecap="round"
                   strokeDasharray={donutCircumference}
@@ -451,7 +451,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Traffic Sources — horizontal bars */}
-        <div className="admin-card p-5 lg:col-span-3">
+        <div className="admin-card p-4 lg:col-span-3">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-blue-400" />
@@ -489,9 +489,9 @@ export const AdminDashboard: React.FC = () => {
       {/* ============================================
           ROW 3 — DATA TABLES
           ============================================ */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
         {/* Recent Orders */}
-        <div className="admin-card p-5 lg:col-span-4">
+        <div className="admin-card p-4 lg:col-span-4 order-2">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-sm font-semibold text-white">Recent Orders</h3>
@@ -545,7 +545,7 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Top Products */}
-        <div className="admin-card p-5 lg:col-span-4">
+        <div className="admin-card p-4 lg:col-span-4 order-1">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-sm font-semibold text-white">Top Selling Products</h3>
@@ -587,7 +587,7 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="admin-card p-5 lg:col-span-4">
+        <div className="admin-card p-4 lg:col-span-4 order-3">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-sm font-semibold text-white">System Health</h3>
