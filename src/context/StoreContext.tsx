@@ -306,9 +306,12 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [brandingLogoUrl, setBrandingLogoUrl] = useState<string>(() => {
     try {
-      return localStorage.getItem('playbeat-branding-logo') || '/assets/playbeat-logo.svg';
+      const storedLogo = localStorage.getItem('playbeat-branding-logo');
+      return storedLogo && storedLogo !== '/assets/playbeat-logo.svg'
+        ? storedLogo
+        : '/assets/logo.png.jpeg';
     } catch {
-      return '/assets/playbeat-logo.svg';
+      return '/assets/logo.png.jpeg';
     }
   });
 

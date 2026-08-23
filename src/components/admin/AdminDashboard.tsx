@@ -753,7 +753,7 @@ export const AdminDashboard: React.FC = () => {
                   </div>
                   <button
                     onClick={() => {
-                      setBrandingLogoUrl('/assets/playbeat-logo.svg');
+                      setBrandingLogoUrl('/assets/logo.png.jpeg');
                       addToast('success', 'Logo Reset', 'The default PlayBeat logo has been restored.');
                     }}
                     className="mt-2 text-[10px] text-gray-500 hover:text-white underline underline-offset-2"
