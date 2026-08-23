@@ -151,12 +151,12 @@ export const AdminDashboard: React.FC = () => {
   ];
 
   // Recent orders (last 5)
-  const recentOrders = orders.slice(0, 5);
+  const recentOrders = orders.slice(0, 3);
 
   // Top products (highest totalSold)
   const topProducts = [...products]
     .sort((a, b) => (b.totalSold || 0) - (a.totalSold || 0))
-    .slice(0, 5);
+    .slice(0, 3);
 
   // Donut chart values
   const donutSize = 120;
@@ -325,113 +325,6 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* ============================================
-          CATALOG HEALTH STRIP (Premium v2)
-          Breaks down the catalog: Total / Active / Hidden / Low-Stock
-          Plus quick-action buttons (Add Product, Migrate Variations, etc.)
-          ============================================ */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {(() => {
-          const total = products.length;
-          const active = products.filter((p) => p.status === 'published').length;
-          const hidden = products.filter((p) => p.status === 'draft' || p.status === 'archived').length;
-          const lowStock = products.filter((p) => p.stock <= p.lowStockThreshold && p.stock > 0).length;
-          const outStock = products.filter((p) => p.stock <= 0).length;
-
-          const stats = [
-            { label: 'Total Products', value: total, accent: 'var(--pb-silver-2)', delta: `${active} active` },
-            { label: 'Active / Published', value: active, accent: 'var(--pb-emerald)', delta: `${Math.round((active / Math.max(total, 1)) * 100)}% of catalog` },
-            { label: 'Hidden (Draft/Archived)', value: hidden, accent: 'var(--pb-amber)', delta: hidden === 0 ? 'None hidden' : 'Needs review' },
-            { label: 'Low / Out of Stock', value: lowStock + outStock, accent: outStock > 0 ? '#FF2E42' : 'var(--pb-amber)', delta: `${lowStock} low · ${outStock} out` },
-          ];
-
-          return stats.map((s) => (
-            <div key={s.label} className="pb-kpi">
-              <div className="pb-kpi-accent" style={{ background: s.accent }} />
-              <div className="pb-kpi-label">{s.label}</div>
-              <div className="pb-kpi-value">{s.value}</div>
-              <div className="pb-kpi-delta flat">{s.delta}</div>
-            </div>
-          ));
-        })()}
-      </div>
-
-      {/* ============================================
-          QUICK ACTIONS (Premium v2)
-          ============================================ */}
-      <div className="flex flex-wrap gap-2 pb-panel p-3 rounded-xl">
-        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--pb-silver-3)] self-center mr-2">
-          Quick Actions:
-        </span>
-        <button
-          onClick={() => setAdminTab('products')}
-          className="pb-btn pb-btn-primary pb-btn-sm"
-        >
-          <Plus className="w-3 h-3" />
-          <span>Add Product</span>
-        </button>
-        <button
-          onClick={() => setAdminTab('orders')}
-          className="pb-btn pb-btn-secondary pb-btn-sm"
-        >
-          <ShoppingCart className="w-3 h-3" />
-          <span>View Orders</span>
-        </button>
-        <button
-          onClick={() => setAdminTab('discounts')}
-          className="pb-btn pb-btn-secondary pb-btn-sm"
-        >
-          <Tag className="w-3 h-3" />
-          <span>Discounts</span>
-        </button>
-        <button
-          onClick={() => setAdminTab('content')}
-          className="pb-btn pb-btn-secondary pb-btn-sm"
-        >
-          <Palette className="w-3 h-3" />
-          <span>Edit Storefront</span>
-        </button>
-        <button
-          onClick={() => setAdminTab('dedup')}
-          className="pb-btn pb-btn-secondary pb-btn-sm"
-        >
-          <Layers className="w-3 h-3" />
-          <span>Variant Dedup</span>
-        </button>
-      </div>
-
-      {/* ============================================
-          TIME RANGE SEGMENTED CONTROL + VIEW LABEL (DashFlat 1D/1W/1M/1Y)
-          ============================================ */}
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <div className="flex items-center gap-2">
-          <span className="text-[10px] text-gray-500 font-mono uppercase tracking-wider mr-1">Range:</span>
-          <div className="flex items-center gap-0.5 p-0.5 rounded-full bg-[#0f141c] border border-[#1f2937]">
-            {([
-              { r: '1D', c: 'btn-glossy btn-glossy-blue btn-glossy-sm' },
-              { r: '1W', c: 'btn-glossy btn-glossy-yellow btn-glossy-sm' },
-              { r: '1M', c: 'btn-glossy btn-glossy-emerald btn-glossy-sm' },
-              { r: '1Y', c: 'btn-glossy btn-glossy-cyan btn-glossy-sm' },
-            ] as const).map((item) => (
-              <button
-                key={item.r}
-                onClick={() => setTimeRange(item.r)}
-                className={`px-3 py-1.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider transition-all ${
-                  timeRange === item.r
-                    ? item.c
-                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
-                }`}
-              >
-                {item.r}
-              </button>
-            ))}
-          </div>
-        </div>
-        <span className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">
-          Showing: {timeRange === '1D' ? 'Last 24 hours' : timeRange === '1W' ? 'Last 7 days' : timeRange === '1M' ? 'Last 30 days' : 'Last 12 months'}
-        </span>
-      </div>
-
-      {/* ============================================
           ROW 1 — KEY METRICS
           ============================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
@@ -594,96 +487,11 @@ export const AdminDashboard: React.FC = () => {
       </div>
 
       {/* ============================================
-          ROW 2 — STATUS & APPROVALS
-          ============================================ */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* System Status */}
-        <div className="admin-card p-5">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <Activity className="w-4 h-4 text-teal-400" />
-              <h3 className="text-sm font-semibold text-white">System Status</h3>
-            </div>
-            <span className="admin-pill-green">100% Healthy</span>
-          </div>
-          <div className="space-y-2">
-            {systemStatus.map((sys) => {
-              const Icon = sys.icon;
-              return (
-                <div key={sys.label} className="flex items-center justify-between p-2.5 rounded-lg bg-[#0f141c] border border-[#1f2937]">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <div className="w-7 h-7 rounded-md bg-[#1f2937] flex items-center justify-center shrink-0">
-                      <Icon className="w-3.5 h-3.5 text-teal-400" />
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-xs text-white font-medium truncate">{sys.label}</div>
-                      {sys.sublabel && (
-                        <div className="text-[10px] text-gray-500 font-mono truncate">{sys.sublabel}</div>
-                      )}
-                    </div>
-                  </div>
-                  <span className={`shrink-0 ${sys.state === 'green' ? 'admin-pill-green' : 'admin-pill-amber'}`}>
-                    {sys.status}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Pending Approvals */}
-        <div className="admin-card p-5">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <PackageCheck className="w-4 h-4 text-emerald-400" />
-              <h3 className="text-sm font-semibold text-white">Pending Products Approvals</h3>
-            </div>
-            <span className="admin-pill-green">0 Queued</span>
-          </div>
-          <div className="flex flex-col items-center justify-center py-8 text-center">
-            <div className="w-14 h-14 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mb-3">
-              <CircleCheck className="w-7 h-7 text-emerald-400" />
-            </div>
-            <div className="text-sm font-bold text-emerald-400">All products published</div>
-            <p className="text-[11px] text-gray-500 mt-1">No products awaiting approval</p>
-            <p className="text-[10px] text-gray-600 mt-3 font-mono">
-              Auto-verification enabled for verified merchants
-            </p>
-          </div>
-        </div>
-
-        {/* Live Notifications */}
-        <div className="admin-card p-5">
-          <div className="flex items-start justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <BellRing className="w-4 h-4 text-amber-400" />
-              <h3 className="text-sm font-semibold text-white">Live Notifications</h3>
-            </div>
-            <span className="text-[10px] text-gray-500 font-mono uppercase">Real-time</span>
-          </div>
-          <div className="space-y-2.5">
-            {notifications.map((n, idx) => (
-              <div key={idx} className="p-2.5 rounded-lg bg-[#0f141c] border border-[#1f2937] hover:border-[#3a4256] transition-colors">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">{n.title}</span>
-                  <span className="text-[10px] text-gray-600 font-mono">{n.time}</span>
-                </div>
-                <p className="text-[11px] text-gray-300 leading-snug">{n.message}</p>
-              </div>
-            ))}
-          </div>
-          <p className="text-[10px] text-gray-600 mt-3 font-mono">
-            [PN] Webhook listeners active on /api/webhooks
-          </p>
-        </div>
-      </div>
-
-      {/* ============================================
           ROW 3 — DATA TABLES
           ============================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
         {/* Recent Orders */}
-        <div className="admin-card p-5 lg:col-span-7">
+        <div className="admin-card p-5 lg:col-span-4">
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-sm font-semibold text-white">Recent Orders</h3>
@@ -737,10 +545,10 @@ export const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Top Products */}
-        <div className="admin-card p-5 lg:col-span-5">
+        <div className="admin-card p-5 lg:col-span-4">
           <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 className="text-sm font-semibold text-white">Top Products</h3>
+              <h3 className="text-sm font-semibold text-white">Top Selling Products</h3>
               <p className="text-[11px] text-gray-500 mt-0.5">Best-selling subscriptions, projectors & passes</p>
             </div>
             <span className="admin-pill-purple">Verified</span>
@@ -778,6 +586,32 @@ export const AdminDashboard: React.FC = () => {
             ))}
           </div>
         </div>
+
+        <div className="admin-card p-5 lg:col-span-4">
+          <div className="flex items-start justify-between mb-4">
+            <div>
+              <h3 className="text-sm font-semibold text-white">System Health</h3>
+              <p className="text-[11px] text-gray-500 mt-0.5">Live service availability</p>
+            </div>
+            <span className="admin-pill-green">100% Healthy</span>
+          </div>
+          <div className="flex items-center gap-5">
+            <div className="relative w-28 h-28 shrink-0 flex items-center justify-center">
+              <div className="absolute inset-0 rounded-full border-[10px] border-[#1f2937]" />
+              <div className="absolute inset-0 rounded-full border-[10px] border-emerald-400 border-l-transparent rotate-[-35deg]" style={{ filter: 'drop-shadow(0 0 8px rgba(16,185,129,.45))' }} />
+              <div className="text-center"><div className="text-2xl font-bold text-white">100%</div><div className="text-[10px] text-emerald-400">Healthy</div></div>
+            </div>
+            <div className="space-y-3 flex-1">
+              {systemStatus.map((sys) => <div key={sys.label} className="flex items-center justify-between gap-2 text-[11px]"><span className="flex items-center gap-2 text-gray-300 truncate"><CircleCheck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />{sys.label === 'MongoDB Atlas Cloud' ? 'Database' : sys.label}</span><span className="text-emerald-400 text-[10px]">Operational</span></div>)}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="admin-card min-h-[78px] p-4 flex items-center justify-between gap-4 overflow-hidden relative border-amber-400/40">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgba(245,158,11,.18),transparent_42%)] pointer-events-none" />
+        <div className="flex items-center gap-4 relative z-10"><img src={brandingLogoUrl} alt="PlayBeat" className="w-28 h-12 object-contain" /><div><h3 className="text-base font-bold text-white">Boost Your Sales with PlayBeat Marketing Tools</h3><p className="text-[11px] text-gray-500">Create powerful campaigns, grow your audience and increase conversions.</p></div></div>
+        <button onClick={() => setAdminTab('marketing')} className="btn-glossy btn-glossy-yellow btn-glossy-sm !text-black relative z-10">Launch Campaign <ArrowRight className="w-3.5 h-3.5" /></button>
       </div>
 
       {/* ============================================

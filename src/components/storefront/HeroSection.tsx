@@ -30,10 +30,9 @@ export const HeroSection: React.FC = () => {
     setIsCompareModalOpen,
     formatPrice,
     setActivePromoFilter,
-    brandingLogoUrl
   } = useStore();
 
-  const featuredProjector = products.find(p => p.id === 'proj-cinebeam-4k') || products[0];
+  const featuredProjector = products.find(p => p.productType === 'physical_projector') || products[0];
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--pb-ink)] border-b border-[var(--pb-line)] pt-8 pb-16 lg:py-20 px-4 sm:px-6">
@@ -44,15 +43,6 @@ export const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
         {/* LEFT COLUMN: HERO TEXT & SEARCH */}
         <div className="lg:col-span-7 space-y-6">
-          {/* PlayBeat Logo – Responsive Mobile & Desktop */}
-          <div className="inline-block mb-2">
-            <img
-              src={brandingLogoUrl}
-              alt="PlayBeat Digital"
-              className="w-32 sm:w-40 lg:w-56 h-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
-            />
-          </div>
-
           {/* Highlight Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--pb-charcoal)] border border-[var(--pb-line)] text-xs font-mono uppercase tracking-[0.2em] shadow-lg">
             <span className="flex h-2 w-2 rounded-full bg-[#facc15] shadow-[0_0_10px_rgba(250,204,21,0.8)] animate-pulse" />
@@ -62,9 +52,9 @@ export const HeroSection: React.FC = () => {
           </div>
 
           {/* Main Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white font-display tracking-tight leading-[1.1]">
-            <span className="text-white">Play</span><span className="text-[#facc15]">Beat</span>{' '}
-            <span className="text-white">Global Access</span> to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#facc15] via-white to-[#60a5fa]">Premium Digital + Cinema</span>
+          <h1 className="pb-hero-title text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-[-0.055em] leading-[0.98]">
+            Premium access,
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#fff7b2] via-[#facc15] to-[#60a5fa]">beautifully delivered.</span>
           </h1>
 
           {/* Subtitle */}
@@ -173,7 +163,7 @@ export const HeroSection: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-[var(--pb-charcoal)] via-transparent to-black/20" />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-xs">
                   <span className="px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur-md text-white font-mono text-[11px] border border-white/10">
-                    4K Laser Cinema • 2,800 Lumens
+                    {featuredProjector?.projectorSpecs?.nativeResolution || '4K Smart Entertainment'}
                   </span>
                   <span className="pb-badge pb-badge-red">SAVE $200</span>
                 </div>
@@ -190,11 +180,11 @@ export const HeroSection: React.FC = () => {
                 <div className="grid grid-cols-2 gap-2 text-[11px] font-mono text-[var(--pb-silver-2)]">
                   <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[var(--pb-ink)] border border-[var(--pb-line)]">
                     <Tv className="w-3.5 h-3.5 text-[var(--pb-red-bright)]" />
-                    <span>Android TV 11.0</span>
+                    <span>{featuredProjector?.projectorSpecs?.operatingSystem || 'Smart TV Ready'}</span>
                   </div>
                   <div className="flex items-center gap-1.5 p-2 rounded-xl bg-[var(--pb-ink)] border border-[var(--pb-line)]">
                     <Cpu className="w-3.5 h-3.5 text-[var(--pb-gold)]" />
-                    <span>HDR10+ Decoder</span>
+                    <span>{featuredProjector?.projectorSpecs?.brightness || 'High Brightness'}</span>
                   </div>
                 </div>
 

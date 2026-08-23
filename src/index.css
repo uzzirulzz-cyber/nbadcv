@@ -1030,6 +1030,12 @@
   min-height: 100vh;
 }
 
+.pb-hero-title {
+  font-family: 'Outfit', sans-serif;
+  text-wrap: balance;
+  text-shadow: 0 8px 35px rgba(0, 0, 0, 0.35);
+}
+
 /* Primary premium card — black/charcoal with silver border */
 .pb-card {
   background: linear-gradient(180deg, var(--pb-charcoal) 0%, var(--pb-ink) 100%);
