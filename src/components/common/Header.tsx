@@ -165,7 +165,7 @@ export const Header: React.FC = () => {
     <header className="sticky top-0 z-40 w-full flex flex-col bg-[#08152F]/95 backdrop-blur-xl border-b border-[#26334A] shadow-2xl">
       {/* 1. ANNOUNCEMENT BAR */}
       {content.announcementBar.enabled && (
-        <div className="w-full bg-[#070B14] border-b border-[#26334A]/80 py-1.5 px-4 text-xs text-slate-300 font-medium">
+        <div className="w-full bg-[#070B14] border-b border-[#26334A]/80 py-1 px-4 text-xs text-slate-300 font-medium">
           <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
             <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
               {content.announcementBar.badgeText && (
@@ -195,7 +195,7 @@ export const Header: React.FC = () => {
       )}
 
       {/* 2. MAIN HEADER NAVIGATION */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-3 flex items-center justify-between gap-3 lg:gap-8">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-1.5 flex items-center justify-between gap-3 lg:gap-6">
         {/* BRAND LOGO */}
         <div className="flex items-center gap-6">
           <button
@@ -212,7 +212,7 @@ export const Header: React.FC = () => {
             <img
               src={brandingLogoUrl}
               alt="PlayBeat Digital"
-              className="w-36 sm:w-44 h-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+              className="w-32 sm:w-40 h-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
             />
           </button>
 
@@ -444,6 +444,24 @@ export const Header: React.FC = () => {
             </span>
           </button>
 
+          {/* SIGN-IN ACTION — kept in the main row beside cart */}
+          {currentUser.id === 'guest' && (
+            <div className="hidden lg:flex items-center gap-1.5">
+              <button
+                onClick={() => { setAuthMode('login'); setIsAuthModalOpen(true); }}
+                className="px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all"
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => { setAuthMode('signup'); setIsAuthModalOpen(true); }}
+                className="btn-glossy btn-glossy-yellow btn-glossy-sm !px-3 !py-1.5 !text-[10px]"
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+
           {/* USER ACCOUNT BUTTON */}
           <div className="relative">
             <button
@@ -546,7 +564,7 @@ export const Header: React.FC = () => {
 
       {/* 5. QUICK NAVIGATION BAR (SUB-HEADER WITH PROMO & CUSTOM NAV ITEMS) */}
       <div className="hidden md:block w-full border-t border-[#26334A] bg-[#070B14] px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar py-2.5 text-xs uppercase tracking-wider">
+        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar py-1.5 text-xs uppercase tracking-wider">
           <div className="flex items-center gap-5 text-xs text-slate-300 font-medium">
             <button
               onClick={() => handleNavClick('all')}
@@ -609,7 +627,7 @@ export const Header: React.FC = () => {
 
       {/* 5b. CATEGORY NAV BAR — Video Streaming / Games / Top Up / AI Tools / Smart Projectors + Sign In / Sign Up */}
       <div className="hidden md:block w-full border-t border-[#26334A] bg-[#050810] px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 py-2 overflow-x-auto no-scrollbar">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 py-1 overflow-x-auto no-scrollbar">
           {/* Left: category buttons */}
           <div className="flex items-center gap-1">
             {[
@@ -652,39 +670,6 @@ export const Header: React.FC = () => {
             })}
           </div>
 
-          {/* Right: Sign In / Sign Up (guest) or user name (logged in) */}
-          <div className="flex items-center gap-2 shrink-0 pl-4 border-l border-[#26334A]">
-            {currentUser.id === 'guest' ? (
-              <>
-                <button
-                  onClick={() => {
-                    setAuthMode('login');
-                    setIsAuthModalOpen(true);
-                  }}
-                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all"
-                >
-                  <Shield className="w-3.5 h-3.5" />
-                  <span>Sign In</span>
-                </button>
-                <button
-                  onClick={() => {
-                    setAuthMode('signup');
-                    setIsAuthModalOpen(true);
-                  }}
-                  className="btn-glossy btn-glossy-yellow btn-glossy-sm"
-                >
-                  <span>Sign Up</span>
-                </button>
-              </>
-            ) : (
-              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                <div className="w-5 h-5 rounded-full bg-emerald-500 text-black flex items-center justify-center text-[10px] font-bold">
-                  {currentUser.name.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-xs font-medium text-emerald-300">{currentUser.name}</span>
-              </div>
-            )}
-          </div>
         </div>
       </div>
 
