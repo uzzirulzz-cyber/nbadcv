@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
         {/* LEFT COLUMN: HERO TEXT & SEARCH */}
         <div className="lg:col-span-7 space-y-6">
           <div className="inline-flex rounded-2xl border border-[#facc15]/30 bg-[#071d58]/40 px-4 py-2 shadow-[0_0_30px_rgba(250,204,21,0.12)]">
-            <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-64 sm:w-80 h-auto object-contain" />
+            <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-[300px] h-[200px] max-w-full object-contain" />
           </div>
           {/* Highlight Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--pb-charcoal)] border border-[var(--pb-line)] text-xs font-mono uppercase tracking-[0.2em] shadow-lg">
