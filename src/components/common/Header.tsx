@@ -195,7 +195,7 @@ export const Header: React.FC = () => {
       )}
 
       {/* 2. MAIN HEADER NAVIGATION */}
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 py-1.5 flex items-center justify-between gap-3 lg:gap-6">
+      <div className="storefront-main-nav max-w-7xl mx-auto w-full px-4 sm:px-6 py-1 flex items-center justify-between gap-3 lg:gap-5">
         {/* BRAND LOGO */}
         <div className="flex items-center gap-6">
           <button

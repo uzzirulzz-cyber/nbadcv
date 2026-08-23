@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 export const Footer: React.FC = () => {
-  const { categories, setSelectedCategory, setIsWhatsAppModalOpen, setActiveView, addToast, brandingLogoUrl } = useStore();
+  const { categories, setSelectedCategory, setIsWhatsAppModalOpen, setActiveView, addToast, brandingLogoUrl, currentUser } = useStore();
 
   const directChannels = [
     {
@@ -98,6 +98,14 @@ export const Footer: React.FC = () => {
           <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-sm">
             PlayBeat Digital is a premier international marketplace delivering instant digital CD keys, software licenses, gaming accounts, IPTV servers, and flagship 4K Smart Laser Projectors worldwide with bank-grade buyer protection.
           </p>
+
+          <div className="footer-admin-profile flex items-center gap-3 w-fit rounded-xl border border-[#26334A] bg-[#0b1426] px-3 py-2">
+            <img src={brandingLogoUrl} alt="Super Admin" className="h-9 w-9 rounded-full border border-[#1769FF]/50 bg-[#071d58] object-contain p-1" />
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-[0.16em] text-[#60a5fa]">Super Admin</div>
+              <div className="text-xs font-semibold text-white">{currentUser.id === 'guest' ? 'PlayBeat Digital' : currentUser.name}</div>
+            </div>
+          </div>
 
           <div className="flex flex-wrap items-center gap-2 pt-2">
             <button

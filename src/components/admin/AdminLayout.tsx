@@ -398,6 +398,13 @@ export const AdminLayout: React.FC = () => {
 
       {/* Sidebar footer — Themes, Nav Customizer + Sign Out */}
       <div className="border-t border-[#1f2937] p-3 space-y-0.5">
+        <div className="admin-footer-profile flex items-center gap-2 rounded-lg border border-[#26334A] bg-[#071224] p-2 mb-1">
+          <img src={brandingLogoUrl} alt="Super Admin profile" className="h-8 w-8 rounded-full border border-cyan-400/40 bg-[#071d58] object-contain p-1 shrink-0" />
+          <div className="min-w-0 sidebar-footer-text">
+            <div className="text-[9px] font-mono uppercase tracking-wider text-cyan-300">Super Admin</div>
+            <div className="text-[11px] font-semibold text-white truncate">{currentUser.name}</div>
+          </div>
+        </div>
         <input
           ref={brandingInputRef}
           type="file"

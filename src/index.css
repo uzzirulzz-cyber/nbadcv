@@ -6,6 +6,22 @@
   margin-left: .5rem;
 }
 
+.storefront-main-nav {
+  min-height: 3.25rem;
+}
+
+.storefront-main-nav > div {
+  min-width: 0;
+}
+
+.footer-admin-profile {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 8px 20px rgba(0,0,0,.18);
+}
+
+.admin-footer-profile {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
+}
+
 .header-cart {
   min-width: 5.5rem;
 }
@@ -30,6 +46,12 @@
 @media (max-width: 1023px) {
   .header-actions { gap: .625rem; margin-left: .25rem; }
   .header-profile { margin-left: 0; padding-left: .5rem; }
+}
+
+@media (max-width: 640px) {
+  .storefront-main-nav { min-height: 3rem; }
+  .header-actions { gap: .45rem; }
+  .header-cart { min-width: 0; }
 }
 
 /* Reference dashboard frame: dark navy canvas, 270px rail, compact neon accents. */
