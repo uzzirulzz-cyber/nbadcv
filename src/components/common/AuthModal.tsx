@@ -4,7 +4,7 @@ import { useAuthStore } from '../../store/useAuthStore';
 import {
   X, Shield, Mail, Lock, Eye, EyeOff, Loader2, AlertCircle,
   User as UserIcon, ArrowRight, Globe, Phone, KeyRound, CheckCircle2, ArrowLeft,
-  MessageCircle,
+  MessageCircle, Music2,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
@@ -177,7 +177,7 @@ export const AuthModal: React.FC = () => {
   const passwordStrength = password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password)
     ? (password.length >= 12 ? 'Strong' : 'Medium') : password.length > 0 ? 'Weak' : '';
 
-  const handleSocialAuth = (provider: 'google' | 'facebook' | 'x') => {
+  const handleSocialAuth = (provider: 'google' | 'facebook' | 'x' | 'tiktok') => {
     setSocialProvider(provider);
     window.location.assign(`/api/auth/oauth/${provider}?returnTo=${encodeURIComponent(window.location.pathname)}`);
   };
@@ -264,6 +264,15 @@ export const AuthModal: React.FC = () => {
                 >
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-black border border-white/20 text-xs font-black text-white">𝕏</span>
                   <span>{socialProvider === 'x' ? 'Connecting to X...' : 'Continue with X'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSocialAuth('tiktok')}
+                  disabled={Boolean(socialProvider)}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-cyan-400/30 bg-cyan-400/10 px-3 py-2.5 text-xs font-semibold text-cyan-200 transition-colors hover:bg-cyan-400/20 disabled:opacity-60"
+                >
+                  <Music2 className="w-5 h-5" />
+                  <span>{socialProvider === 'tiktok' ? 'Connecting to TikTok...' : 'Continue with TikTok'}</span>
                 </button>
               </div>
             )}

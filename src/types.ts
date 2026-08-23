@@ -47,8 +47,9 @@ export interface User {
   emailVerified?: boolean;
   phoneVerified?: boolean;
   profileCompleted?: boolean;
-  primaryAuthProvider?: 'email' | 'google' | 'facebook' | 'x';
-  authProviders?: Array<'email' | 'google' | 'facebook' | 'x'>;
+  primaryAuthProvider?: 'email' | 'google' | 'facebook' | 'x' | 'tiktok';
+  authProviders?: Array<'email' | 'google' | 'facebook' | 'x' | 'tiktok'>;
+  authProviderId?: string;
   twoFactorEnabled: boolean;
   addresses: UserAddress[];
   totalSpent: number;

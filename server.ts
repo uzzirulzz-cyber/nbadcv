@@ -69,6 +69,7 @@ export function createApiApp(): Express {
     google: { clientId: process.env.GOOGLE_CLIENT_ID, clientSecret: process.env.GOOGLE_CLIENT_SECRET, authorization: 'https://accounts.google.com/o/oauth2/v2/auth', token: 'https://oauth2.googleapis.com/token', userInfo: 'https://openidconnect.googleapis.com/v1/userinfo', scope: 'openid email profile' },
     facebook: { clientId: process.env.FACEBOOK_CLIENT_ID, clientSecret: process.env.FACEBOOK_CLIENT_SECRET, authorization: 'https://www.facebook.com/v20.0/dialog/oauth', token: 'https://graph.facebook.com/v20.0/oauth/access_token', userInfo: 'https://graph.facebook.com/me?fields=id,name,email,picture', scope: 'email,public_profile' },
     x: { clientId: process.env.X_CLIENT_ID, clientSecret: process.env.X_CLIENT_SECRET, authorization: 'https://twitter.com/i/oauth2/authorize', token: 'https://api.twitter.com/2/oauth2/token', userInfo: 'https://api.twitter.com/2/users/me?user.fields=profile_image_url', scope: 'users.read tweet.read offline.access' },
+    tiktok: { clientId: process.env.TIKTOK_CLIENT_KEY, clientSecret: process.env.TIKTOK_CLIENT_SECRET, authorization: 'https://www.tiktok.com/v2/auth/authorize/', token: 'https://open.tiktokapis.com/v2/oauth/token/', userInfo: 'https://open.tiktokapis.com/v2/user/info/?fields=open_id,display_name,avatar_url', scope: 'user.info.basic' },
   };
   const oauthState = (provider: string, returnTo: string) => {
     const verifier = provider === 'x' ? crypto.randomBytes(32).toString('base64url') : undefined;
@@ -1131,6 +1132,10 @@ export function createApiApp(): Express {
     const callback = process.env.OAUTH_CALLBACK_URL || `${process.env.APP_URL || 'http://localhost:3000'}/api/auth/oauth/callback`;
     const url = new URL(config.authorization);
     url.searchParams.set('client_id', config.clientId);
+    if (provider === 'tiktok') {
+      url.searchParams.delete('client_id');
+      url.searchParams.set('client_key', config.clientId);
+    }
     url.searchParams.set('redirect_uri', callback);
     url.searchParams.set('response_type', 'code');
     url.searchParams.set('scope', config.scope);
@@ -1154,21 +1159,29 @@ export function createApiApp(): Express {
       const config = oauthConfig[state.provider];
       const callback = process.env.OAUTH_CALLBACK_URL || `${process.env.APP_URL || 'http://localhost:3000'}/api/auth/oauth/callback`;
       const tokenParams: Record<string, string> = { code: String(req.query.code || ''), client_id: config.clientId!, client_secret: config.clientSecret!, redirect_uri: callback, grant_type: 'authorization_code' };
+      if (state.provider === 'tiktok') {
+        tokenParams.client_key = tokenParams.client_id;
+        delete tokenParams.client_id;
+      }
       if (state.provider === 'x' && state.verifier) tokenParams.code_verifier = state.verifier;
       const tokenResponse = await fetch(config.token, { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' }, body: new URLSearchParams(tokenParams) });
       const tokenData = await tokenResponse.json() as { access_token?: string };
       if (!tokenResponse.ok || !tokenData.access_token) return res.status(401).send('OAuth authentication could not be completed.');
       const profileResponse = await fetch(config.userInfo, { headers: { Authorization: `Bearer ${tokenData.access_token}` } });
       const profile = await profileResponse.json() as any;
-      const providerId = String(profile.id || profile.data?.id || '');
+      const providerId = String(profile.id || profile.data?.id || profile.data?.user?.open_id || profile.user?.open_id || '');
       const providerEmail = String(profile.email || profile.data?.email || '').toLowerCase();
-      if (!providerId || !providerEmail) return res.status(400).send('The provider did not return a verified email address.');
-      let user = await repo.findUserByEmail(providerEmail);
+      if (!providerId) return res.status(400).send('The provider did not return a valid account ID.');
+      const users = await repo.getUsers();
+      const linkedUser = users.find(candidate => candidate.authProviderId === providerId && candidate.primaryAuthProvider === state.provider);
+      const accountEmail = providerEmail || `tiktok-${providerId}@accounts.playbeat.digital`;
+      let user = linkedUser || await repo.findUserByEmail(accountEmail);
       if (!user) {
-        user = { id: `usr-${Date.now()}`, name: profile.name || profile.data?.name || providerEmail.split('@')[0], email: providerEmail, role: 'customer', avatarUrl: profile.picture?.data?.url || profile.profile_image_url || profile.data?.profile_image_url, twoFactorEnabled: false, addresses: [], totalSpent: 0, ordersCount: 0, wishlist: [], status: 'active', emailVerified: true, profileCompleted: false, primaryAuthProvider: state.provider as 'google' | 'facebook' | 'x', authProviders: [state.provider as 'google' | 'facebook' | 'x'], createdAt: new Date().toISOString() };
+        const provider = state.provider as 'google' | 'facebook' | 'x' | 'tiktok';
+        user = { id: `usr-${Date.now()}`, name: profile.name || profile.data?.name || profile.data?.user?.display_name || profile.user?.display_name || accountEmail.split('@')[0], email: accountEmail, role: 'customer', avatarUrl: profile.picture?.data?.url || profile.profile_image_url || profile.data?.profile_image_url || profile.data?.user?.avatar_url || profile.user?.avatar_url, twoFactorEnabled: false, addresses: [], totalSpent: 0, ordersCount: 0, wishlist: [], status: 'active', emailVerified: Boolean(providerEmail), profileCompleted: false, primaryAuthProvider: provider, authProviders: [provider], authProviderId: providerId, createdAt: new Date().toISOString() };
         await repo.createUser(user);
-      } else if (!user.authProviders?.includes(state.provider as 'google' | 'facebook' | 'x')) {
-        await repo.updateUserById(user.id, { authProviders: [...(user.authProviders || []), state.provider as 'google' | 'facebook' | 'x'] });
+      } else if (!user.authProviders?.includes(state.provider as 'google' | 'facebook' | 'x' | 'tiktok')) {
+        await repo.updateUserById(user.id, { authProviders: [...(user.authProviders || []), state.provider as 'google' | 'facebook' | 'x' | 'tiktok'], authProviderId: providerId });
       }
       const sessionToken = createSession(user.id);
       setSessionCookie(res, sessionToken);
