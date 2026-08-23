@@ -317,9 +317,7 @@ export const AdminLayout: React.FC = () => {
     <>
       {/* Brand strip + collapse toggle */}
       <div className="px-5 py-4 border-b border-[#1f2937] flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center text-black font-bold text-sm shrink-0">
-          P
-        </div>
+        <img src="/assets/playbeat-logo.svg" alt="PlayBeat Digital" className="w-12 h-8 object-contain shrink-0" />
         <div className="sidebar-brand-text min-w-0 flex-1">
           <div className="text-sm font-bold text-white font-display truncate">PlayBeat Digital</div>
           <div className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">Admin Console</div>

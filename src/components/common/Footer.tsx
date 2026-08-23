@@ -93,14 +93,7 @@ export const Footer: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
         {/* Col 1: Brand & Bio */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white shadow-[0_0_15px_rgba(220,38,38,0.4)]">
-              <Zap className="w-4 h-4 fill-white" />
-            </div>
-            <span className="font-display text-lg font-black tracking-tight text-white">
-              PLAYBEAT<span className="text-red-500">.</span>DIGITAL
-            </span>
-          </div>
+          <img src="/assets/playbeat-logo.svg" alt="PlayBeat Digital" className="w-56 sm:w-64 h-auto object-contain object-left" />
 
           <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-sm">
             PlayBeat Digital is a premier international marketplace delivering instant digital CD keys, software licenses, gaming accounts, IPTV servers, and flagship 4K Smart Laser Projectors worldwide with bank-grade buyer protection.

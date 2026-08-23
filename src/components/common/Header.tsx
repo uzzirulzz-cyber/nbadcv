@@ -208,23 +208,11 @@ export const Header: React.FC = () => {
             className="flex items-center gap-3 group text-left focus:outline-none"
             aria-label="PlayBeat Digital Home"
           >
-            {/* Custom PlayBeat Logo Mark */}
-            <div className="w-9 h-9 rounded-xl bg-[#10182A] border border-[#26334A] group-hover:border-[#1769FF]/60 flex items-center justify-center relative overflow-hidden transition-all duration-300 shadow-lg">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#1769FF]/20 via-[#6B4DFF]/10 to-[#FF304F]/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="w-4 h-4 bg-gradient-to-br from-[#1769FF] to-[#287BFF] flex items-center justify-center rotate-45 transform group-hover:scale-110 transition-transform shadow-[0_0_12px_rgba(23,105,255,0.7)]">
-                <Zap className="w-2.5 h-2.5 text-white -rotate-45" />
-              </div>
-            </div>
-
-            <div className="flex items-center">
-              <div className="text-xl sm:text-2xl font-bold tracking-tighter flex items-center">
-                <span className="text-white font-display">PLAY</span>
-                <span className="text-[#1769FF] font-display">BEAT</span>
-                <span className="ml-2 text-[10px] bg-[#1769FF]/15 text-[#287BFF] border border-[#1769FF]/30 px-2 py-0.5 rounded-md font-mono font-bold tracking-wider shadow-sm">
-                  DIGITAL
-                </span>
-              </div>
-            </div>
+            <img
+              src="/assets/playbeat-logo.svg"
+              alt="PlayBeat Digital"
+              className="w-36 sm:w-44 h-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+            />
           </button>
 
           {/* CATEGORIES BUTTON (DESKTOP) */}
