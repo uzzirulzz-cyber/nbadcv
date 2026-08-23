@@ -29,8 +29,7 @@ export const HeroSection: React.FC = () => {
     products,
     setIsCompareModalOpen,
     formatPrice,
-    setActivePromoFilter,
-    brandingLogoUrl
+    setActivePromoFilter
   } = useStore();
 
   const featuredProjector = products.find(p => p.id === 'proj-cinebeam-4k') || products[0];
@@ -44,9 +43,6 @@ export const HeroSection: React.FC = () => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
         {/* LEFT COLUMN: HERO TEXT & SEARCH */}
         <div className="lg:col-span-7 space-y-6">
-          <div className="inline-flex rounded-2xl border border-[#facc15]/30 bg-[#071d58]/40 px-4 py-2 shadow-[0_0_30px_rgba(250,204,21,0.12)]">
-            <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-[300px] h-[200px] max-w-full object-contain" />
-          </div>
           {/* Highlight Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--pb-charcoal)] border border-[var(--pb-line)] text-xs font-mono uppercase tracking-[0.2em] shadow-lg">
             <span className="flex h-2 w-2 rounded-full bg-[var(--pb-red-bright)] shadow-[0_0_10px_rgba(225,29,46,0.8)] animate-pulse" />
