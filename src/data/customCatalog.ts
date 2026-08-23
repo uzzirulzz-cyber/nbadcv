@@ -10,7 +10,7 @@ export const CUSTOM_CATEGORIES: Category[] = [
     description: 'Reliable IPTV subscriptions with live channels, sports, and video-on-demand access.',
     iconName: 'Radio',
     isFeatured: true,
-    productCount: 1,
+    productCount: 3,
     displayOrder: 1,
   },
   {
@@ -120,6 +120,8 @@ function product(
 
 export const CUSTOM_PRODUCTS: Product[] = [
   product('P-1001', 'PlayBeat Premium IPTV 12M', 'IPTV-12M', 'iptv', 'IPTV Subscriptions', 4999, 9999, 412, 'Premium IPTV access for 12 months with live channels, sports, and VOD.', ['IPTV', '12 Months', 'Sports', 'VOD']),
+  product('P-IPTV-15000-4K', 'IPTV 15,000 Local & Global Channels 4K — 1 Month', 'IPTV-15000-4K-1M', 'iptv', 'IPTV Subscriptions', 670, 100, 0, '15,000 local and global IPTV channels in 4K quality with one-month access.', ['IPTV', '15,000 Channels', '4K', 'Local', 'Global', '1 Month']),
+  product('P-IPTV-RESELLER-PANEL', 'IPTV Reseller Panel', 'IPTV-RESELLER-PANEL', 'iptv', 'IPTV Subscriptions', 8300, 25, 0, 'IPTV reseller panel access for managing customers, packages, and digital subscriptions.', ['IPTV', 'Reseller Panel', 'Business', 'Instant Delivery']),
   product('P-1002', 'Windows 11 Pro License', 'LIC-W11P', 'software', 'Digital Licenses', 3500, 240, 188, 'Genuine Windows 11 Pro digital license delivered instantly.', ['Windows', 'License', 'Productivity']),
   product('P-1003', 'Formuler Z10 4K Box', 'BOX-Z10', 'boxes', 'Set-Top Boxes', 18500, 64, 96, 'A powerful 4K streaming box for smooth home entertainment.', ['4K', 'Streaming Box', 'Hardware'], 'physical_projector'),
   product('P-1004', 'Netflix Premium 1M', 'SUB-NF1', 'streaming', 'Streaming Subscriptions', 850, 9999, 312, 'One month of premium streaming access with high-quality playback.', ['Netflix', 'Streaming', '1 Month']),
