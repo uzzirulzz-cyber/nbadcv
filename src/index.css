@@ -390,6 +390,21 @@
   animation: dashboardPulse 4.8s ease-in-out infinite;
 }
 
+.dashboard-reference {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.dashboard-reference .admin-card {
+  background: linear-gradient(145deg, rgba(10, 27, 57, .88), rgba(5, 15, 31, .96));
+  border-color: rgba(38, 67, 108, .78);
+  box-shadow: 0 12px 30px rgba(0,0,0,.24), inset 0 1px 0 rgba(255,255,255,.035);
+}
+
+.dashboard-reference .admin-card:hover {
+  border-color: rgba(250, 204, 21, .42);
+}
+
 .dashboard-kpi-revenue { border-left: 3px solid #1769ff !important; }
 .dashboard-kpi-orders { border-left: 3px solid #ffc928 !important; }
 .dashboard-kpi-products { border-left: 3px solid #9b5cff !important; }

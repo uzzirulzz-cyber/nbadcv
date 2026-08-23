@@ -29,11 +29,8 @@ import {
   Calendar,
   ChevronDown,
   Download,
+  RefreshCw,
   Settings,
-  Plus,
-  Tag,
-  Palette,
-  Layers,
   Upload,
 } from 'lucide-react';
 import {
@@ -66,9 +63,9 @@ export const AdminDashboard: React.FC = () => {
   const [isResetOpen, setIsResetOpen] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [confirmText, setConfirmText] = useState('');
+  // Retained for backwards-compatible settings markup; the reference toolbar no longer exposes this modal.
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [timeRange, setTimeRange] = useState<'1D' | '1W' | '1M' | '1Y'>('1W');
-  const [dashboardTab, setDashboardTab] = useState<'activities' | 'statistics' | 'summary'>('activities');
 
   const handleReset = async () => {
     if (confirmText !== 'RESET') {
@@ -166,75 +163,16 @@ export const AdminDashboard: React.FC = () => {
   const donutOffset = donutCircumference * (1 - completionRate / 100);
 
   return (
-    <div className="space-y-5">
-      {/* ============================================
-          DASHBOARD HEADER — Flare UI + DashFlat hybrid
-          Icon+text tab buttons, pill action buttons, date selector, export, settings, reset
-          ============================================ */}
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center">
-            <Activity className="w-5 h-5 text-blue-400" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-white font-display">Welcome back, PlayBeat Admin! 👋</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Here’s what’s happening with your business today.</p>
-          </div>
+    <div className="dashboard-reference space-y-3">
+      <div className="flex items-center justify-between gap-4 flex-wrap rounded-xl border border-[#1f3558] bg-[#071224]/75 px-4 py-3">
+        <div>
+          <h1 className="text-xl font-bold text-white font-display">Welcome back, PlayBeat Admin! 👋</h1>
+          <p className="text-xs text-gray-500 mt-0.5">Here’s what’s happening with your business today.</p>
         </div>
-        <div className="flex items-center gap-2 flex-wrap">
-          {/* Each tab button gets its OWN unique glossy color when active */}
-          <div className="flex items-center p-1 rounded-full bg-[#0f141c] border border-[#1f2937]">
-            {([
-              { id: 'activities', label: 'Activities', icon: Play, activeClass: 'btn-glossy btn-glossy-yellow btn-glossy-sm' },
-              { id: 'statistics', label: 'Statistics', icon: BarChart3, activeClass: 'btn-glossy btn-glossy-cyan btn-glossy-sm' },
-              { id: 'summary', label: 'Summary', icon: FileText, activeClass: 'btn-glossy btn-glossy-purple btn-glossy-sm' },
-            ] as const).map((tab) => {
-              const TabIcon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setDashboardTab(tab.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all ${
-                    dashboardTab === tab.id
-                      ? tab.activeClass
-                      : 'text-gray-500 hover:text-gray-300'
-                  }`}
-                >
-                  <TabIcon className="w-3 h-3" />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Each action button has a DIFFERENT premium glossy color */}
-          <button className="btn-glossy btn-glossy-blue btn-glossy-sm">
-            <Calendar className="w-3.5 h-3.5" />
-            <span>{timeRange === '1D' ? 'Today' : timeRange === '1W' ? 'This Week' : timeRange === '1M' ? 'This Month' : 'This Year'}</span>
-            <ChevronDown className="w-3 h-3" />
-          </button>
-
-          <button className="btn-glossy btn-glossy-emerald btn-glossy-sm">
-            <Download className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Export</span>
-          </button>
-
-          <button
-            onClick={() => setIsSettingsOpen(true)}
-            className="btn-glossy btn-glossy-purple btn-glossy-circle"
-            aria-label="Open dashboard settings"
-            title="Dashboard Settings"
-          >
-            <Settings className="w-4 h-4" />
-          </button>
-
-          <button
-            onClick={() => setIsResetOpen(true)}
-            className="btn-glossy btn-glossy-red btn-glossy-sm"
-          >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Reset</span>
-          </button>
+        <div className="flex items-center gap-2">
+          <button className="btn-glossy btn-glossy-dark btn-glossy-sm"><Calendar className="w-3.5 h-3.5" />This Week<ChevronDown className="w-3 h-3" /></button>
+          <button className="btn-glossy btn-glossy-dark btn-glossy-sm"><Download className="w-3.5 h-3.5" />Export<ChevronDown className="w-3 h-3" /></button>
+          <button onClick={() => window.location.reload()} className="btn-glossy btn-glossy-yellow btn-glossy-sm !text-black"><RefreshCw className="w-3.5 h-3.5" />Refresh</button>
         </div>
       </div>
 

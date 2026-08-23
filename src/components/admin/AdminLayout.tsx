@@ -551,7 +551,7 @@ export const AdminLayout: React.FC = () => {
         </header>
 
         {/* ---- MAIN CONTENT ---- */}
-        <main className="flex-1 p-4 sm:p-6 overflow-x-hidden">
+        <main className="flex-1 p-3 sm:p-4 overflow-x-hidden">
           {renderActiveView()}
         </main>
       </div>
