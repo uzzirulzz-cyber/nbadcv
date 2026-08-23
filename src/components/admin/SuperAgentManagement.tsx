@@ -101,7 +101,7 @@ export const SuperAgentManagement: React.FC = () => {
         body: JSON.stringify(createForm),
       });
       const data = await res.json();
-      if (data.success) {
+      if (res.ok && data.success) {
         addToast('success', 'Agent Created', `${createForm.name} added as ${createForm.role}.`);
         setCreateForm({ name: '', email: '', password: '', role: 'support_agent' });
         setIsCreateOpen(false);
@@ -117,11 +117,13 @@ export const SuperAgentManagement: React.FC = () => {
 
   const handleRoleChange = async (user: User, newRole: Role) => {
     try {
-      await fetch(`/api/admin/users/${user.id}`, {
+      const res = await fetch(`/api/admin/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole }),
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Could not update role.');
       addToast('success', 'Role Updated', `${user.name} is now ${newRole.replace(/_/g, ' ')}.`);
       fetchUsers();
     } catch {
@@ -136,11 +138,13 @@ export const SuperAgentManagement: React.FC = () => {
     }
     const newStatus = user.status === 'suspended' ? 'active' : 'suspended';
     try {
-      await fetch(`/api/admin/users/${user.id}`, {
+      const res = await fetch(`/api/admin/users/${user.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.error || 'Could not update status.');
       addToast('info', newStatus === 'suspended' ? 'Agent Suspended' : 'Agent Reactivated', `${user.name} is now ${newStatus}.`);
       fetchUsers();
     } catch {
