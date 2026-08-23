@@ -61,6 +61,7 @@ import {
   Palette,
   ChevronDown,
   Bell,
+  Plus,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -405,7 +406,7 @@ export const AdminLayout: React.FC = () => {
       {/* ===========================================================
           DESKTOP SIDEBAR (260px or 64px collapsed, fixed)
           =========================================================== */}
-      <aside className={`hidden md:flex flex-col w-[200px] admin-sidebar fixed inset-y-0 left-0 z-30 transition-all duration-200 ${isCollapsed ? 'admin-sidebar-collapsed' : ''}`}>
+      <aside className={`hidden md:flex flex-col w-[270px] admin-sidebar fixed inset-y-0 left-0 z-30 transition-all duration-200 ${isCollapsed ? 'admin-sidebar-collapsed' : ''}`}>
         {sidebarContent}
       </aside>
 
@@ -445,7 +446,7 @@ export const AdminLayout: React.FC = () => {
       {/* ===========================================================
           MAIN COLUMN (offset by sidebar width on desktop)
           =========================================================== */}
-      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${isCollapsed ? 'md:ml-16' : 'md:ml-[200px]'}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${isCollapsed ? 'md:ml-16' : 'md:ml-[270px]'}`}>
         {/* ---- TOP HEADER BAR ---- */}
         <header className="sticky top-0 z-20 bg-[#0f1115]/95 backdrop-blur-md border-b border-[#1f2937] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-3">
           {/* Left side: hamburger + ALL CATEGORIES dropdown + breadcrumb */}
@@ -507,7 +508,7 @@ export const AdminLayout: React.FC = () => {
             </div>
 
             {/* Breadcrumb / Title */}
-            <div className="relative hidden sm:block w-60">
+            <div className="relative hidden sm:block w-60 lg:w-[min(32vw,420px)]">
               <input aria-label="Search dashboard" placeholder="Search anything..." className="w-full h-9 rounded-lg bg-[#0b1426] border border-[#26334a] px-10 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500/60" />
               <span className="absolute left-3 top-2 text-gray-500">⌕</span>
               <span className="absolute right-2 top-2 text-[9px] text-gray-600 border border-[#26334a] rounded px-1">CTRL /</span>
@@ -526,6 +527,15 @@ export const AdminLayout: React.FC = () => {
             >
               <Store className="w-3.5 h-3.5" />
               <span className="hidden sm:inline normal-case tracking-normal">Storefront</span>
+            </button>
+
+            <button
+              onClick={() => setAdminTab('products')}
+              className="btn-glossy btn-glossy-blue btn-glossy-sm"
+              title="Add a product"
+            >
+              <Plus className="w-3.5 h-3.5" />
+              <span className="hidden lg:inline normal-case tracking-normal">Quick Add</span>
             </button>
 
             <button

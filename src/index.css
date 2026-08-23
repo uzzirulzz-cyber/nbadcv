@@ -1,5 +1,72 @@
 @import "tailwindcss";
 
+/* Reference dashboard frame: dark navy canvas, 270px rail, compact neon accents. */
+.dashboard-reference {
+  max-width: none;
+  min-width: 0;
+  padding: 0;
+}
+
+.dashboard-reference > .grid {
+  gap: 14px;
+}
+
+.dashboard-reference .admin-card {
+  background: linear-gradient(145deg, rgba(10, 27, 57, .92), rgba(5, 15, 31, .98));
+  border-color: rgba(38, 67, 108, .78);
+}
+
+.dashboard-reference .dashboard-kpi {
+  min-height: 148px;
+  border-width: 1px;
+}
+
+.dashboard-reference .dashboard-kpi-revenue {
+  border-left: 3px solid #1769ff;
+  background: linear-gradient(145deg, #0d1b35, #071122) !important;
+}
+
+.dashboard-reference .dashboard-kpi-orders {
+  border-left: 3px solid #facc15;
+  background: linear-gradient(145deg, #171b31, #0b1224) !important;
+}
+
+.dashboard-reference .dashboard-kpi-products {
+  border-left: 3px solid #9b5cff;
+  background: linear-gradient(145deg, #171337, #0c1026) !important;
+}
+
+.dashboard-reference .dashboard-kpi-customers {
+  border-left: 3px solid #22d3ee;
+  background: linear-gradient(145deg, #08283d, #071523) !important;
+}
+
+.quick-action {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  min-height: 42px;
+  padding: .65rem .75rem;
+  border: 1px solid #263f68;
+  border-radius: 8px;
+  background: rgba(7, 18, 38, .8);
+  color: #dbeafe;
+  font-size: .7rem;
+  font-weight: 700;
+  transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.quick-action:hover { transform: translateY(-2px); box-shadow: 0 0 16px rgba(23, 105, 255, .18); }
+.quick-action-blue { color: #7db2ff; }
+.quick-action-yellow { color: #facc15; }
+.quick-action-cyan { color: #22d3ee; }
+.quick-action-purple { color: #c084fc; }
+
+@media (max-width: 600px) {
+  .dashboard-reference .dashboard-kpi { min-height: 132px; }
+  .dashboard-reference .admin-card { border-radius: 10px; }
+}
+
 @layer base {
   :root {
     --primary-blue: #1769FF;

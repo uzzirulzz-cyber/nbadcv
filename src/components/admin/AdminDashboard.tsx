@@ -32,6 +32,9 @@ import {
   RefreshCw,
   Settings,
   Upload,
+  UserPlus,
+  Users,
+  Megaphone,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -243,20 +246,20 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </button>
 
-        {/* Low Stock — orange/red glossy card */}
-        <button className="dashboard-kpi dashboard-kpi-stock text-left rounded-xl p-5 overflow-hidden relative border-2 border-orange-400/30 transition-all hover:-translate-y-0.5"
-          style={{ background: 'linear-gradient(180deg, #EA580C 0%, #9A3412 100%)', boxShadow: '0 10px 25px rgba(234,88,12,0.3), 0 0 20px rgba(249,115,22,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
+        {/* Customers — cyan glossy card */}
+        <button className="dashboard-kpi dashboard-kpi-customers text-left rounded-xl p-5 overflow-hidden relative border-2 border-cyan-400/30 transition-all hover:-translate-y-0.5"
+          style={{ background: 'linear-gradient(180deg, #0e7490 0%, #164e63 100%)', boxShadow: '0 10px 25px rgba(8,145,178,0.3), 0 0 20px rgba(34,211,238,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
-            <div className="text-[10px] uppercase text-orange-100 tracking-wider font-mono font-bold">Low Stock Alerts</div>
-            <AlertTriangle className="w-4 h-4 text-orange-200" />
+            <div className="text-[10px] uppercase text-cyan-100 tracking-wider font-mono font-bold">Total Customers</div>
+            <Users className="w-4 h-4 text-cyan-200" />
           </div>
-          <div className="text-2xl font-bold text-white font-mono">{products.filter(p => p.stock <= p.lowStockThreshold).length}</div>
-          <div className="text-[10px] text-orange-200 mt-1 flex items-center gap-1">
-            <ArrowUpRight className="w-3 h-3" /> needs attention
+          <div className="text-2xl font-bold text-white font-mono">248</div>
+          <div className="text-[10px] text-cyan-200 mt-1 flex items-center gap-1">
+            <ArrowUpRight className="w-3 h-3" /> +9.7% vs last period
           </div>
           <div className="flex items-end gap-0.5 mt-3 h-8">
-            {[20, 25, 30, 20, 35, 40, 30, 45, 50, 40].map((h, i) => (
-              <div key={i} className="flex-1 bg-orange-300/40 rounded-sm" style={{ height: `${h}%` }} />
+            {[35, 42, 48, 44, 55, 60, 58, 68, 75, 82].map((h, i) => (
+              <div key={i} className="flex-1 bg-cyan-300/40 rounded-sm" style={{ height: `${h}%` }} />
             ))}
           </div>
         </button>
@@ -546,10 +549,37 @@ export const AdminDashboard: React.FC = () => {
         </div>
       </div>
 
-      <div className="admin-card min-h-[78px] p-4 flex items-center justify-between gap-4 overflow-hidden relative border-amber-400/40">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgba(245,158,11,.18),transparent_42%)] pointer-events-none" />
-        <div className="flex items-center gap-4 relative z-10"><img src={brandingLogoUrl} alt="PlayBeat" className="w-28 h-12 object-contain" /><div><h3 className="text-base font-bold text-white">Boost Your Sales with PlayBeat Marketing Tools</h3><p className="text-[11px] text-gray-500">Create powerful campaigns, grow your audience and increase conversions.</p></div></div>
-        <button onClick={() => setAdminTab('marketing')} className="btn-glossy btn-glossy-yellow btn-glossy-sm !text-black relative z-10">Launch Campaign <ArrowRight className="w-3.5 h-3.5" /></button>
+      {/* Quick actions sit beside the campaign banner in the reference layout. */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+        <div className="admin-card p-4 lg:col-span-4">
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h3 className="text-sm font-semibold text-white">Quick Actions</h3>
+              <p className="text-[11px] text-gray-500 mt-0.5">Common admin shortcuts</p>
+            </div>
+            <Sparkles className="w-4 h-4 text-yellow-400" />
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { label: 'Add Product', icon: Package, tab: 'products', tone: 'blue' },
+              { label: 'View Orders', icon: ShoppingCart, tab: 'orders', tone: 'yellow' },
+              { label: 'Customers', icon: UserPlus, tab: 'customers', tone: 'cyan' },
+              { label: 'Campaigns', icon: Megaphone, tab: 'marketing', tone: 'purple' },
+            ].map(({ label, icon: Icon, tab, tone }) => (
+              <button key={label} onClick={() => setAdminTab(tab)} className={`quick-action quick-action-${tone}`}>
+                <Icon className="w-4 h-4" />
+                <span>{label}</span>
+                <ArrowRight className="w-3 h-3 ml-auto opacity-60" />
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="admin-card min-h-[150px] p-5 flex items-center justify-between gap-4 overflow-hidden relative lg:col-span-8 border-amber-400/40">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_50%,rgba(245,158,11,.18),transparent_42%)] pointer-events-none" />
+          <div className="flex items-center gap-4 relative z-10"><img src={brandingLogoUrl} alt="PlayBeat" className="w-28 h-12 object-contain" /><div><h3 className="text-base font-bold text-white">Boost Your Sales with PlayBeat Marketing Tools</h3><p className="text-[11px] text-gray-500 mt-1">Create powerful campaigns, grow your audience and increase conversions.</p></div></div>
+          <button onClick={() => setAdminTab('marketing')} className="btn-glossy btn-glossy-yellow btn-glossy-sm !text-black relative z-10 shrink-0">Launch Campaign <ArrowRight className="w-3.5 h-3.5" /></button>
+        </div>
       </div>
 
       {/* ============================================
