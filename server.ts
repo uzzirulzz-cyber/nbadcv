@@ -1443,7 +1443,7 @@ export function createApiApp(): Express {
   });
 
   // ----------------------------------------------------
-  // ADMIN DASHBOARD RESET — wipe all data and re-seed
+  // ADMIN DASHBOARD RESET — clear application data and retain Super Admin
   // ----------------------------------------------------
   app.post('/api/admin/reset-db', async (req, res) => {
     try {
@@ -1455,12 +1455,12 @@ export function createApiApp(): Express {
         action: 'Database Reset',
         targetType: 'settings',
         targetId: 'database',
-        details: 'Admin triggered a full database reset. All collections were dropped and re-seeded.',
+        details: 'Admin cleared all application data. The Super Admin account was retained for future access.',
         timestamp: new Date().toISOString(),
       });
       return res.json({
         success: true,
-        message: 'Database reset complete. All collections have been re-seeded with default data.',
+        message: 'Database reset complete. Application data is now at zero; the Super Admin account was retained.',
       });
     } catch (err: any) {
       return res.status(500).json({ success: false, error: err.message || 'Reset failed.' });

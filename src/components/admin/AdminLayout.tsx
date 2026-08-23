@@ -445,7 +445,7 @@ export const AdminLayout: React.FC = () => {
   );
 
   return (
-    <div className="min-h-screen bg-[#0b0d10] text-gray-200 flex">
+    <div className="admin-skin min-h-screen bg-[#0b0d10] text-gray-200 flex">
       {/* ===========================================================
           DESKTOP SIDEBAR (260px or 64px collapsed, fixed)
           =========================================================== */}

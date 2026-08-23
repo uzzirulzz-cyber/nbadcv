@@ -21,7 +21,7 @@ import { motion } from 'motion/react';
  *   - No credential hint is rendered anywhere in the UI.
  */
 export const AdminLoginGate: React.FC = () => {
-  const { setCurrentUser, addToast, setActiveView } = useStore();
+  const { setCurrentUser, addToast, setActiveView, brandingLogoUrl } = useStore();
 
   // Both fields start empty — no prefilled email, no saved password.
   const [email, setEmail] = useState('');
@@ -148,8 +148,8 @@ export const AdminLoginGate: React.FC = () => {
         className="relative w-full max-w-md"
       >
         <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-600/30 border-2 border-white/20">
-            <Shield className="w-8 h-8 text-white" />
+          <div className="w-32 h-20 rounded-2xl bg-black/40 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-orange-600/20 border border-orange-400/30 p-2">
+            <img src={brandingLogoUrl} alt="PlayBeat" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-2xl font-bold text-white font-display">PlayBeat Admin</h1>
           <p className="text-xs text-gray-500 mt-1 font-mono uppercase tracking-wider">Restricted Access — Authorized Personnel Only</p>

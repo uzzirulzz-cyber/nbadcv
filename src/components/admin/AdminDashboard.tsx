@@ -58,8 +58,8 @@ import { WeatherWidget } from './WeatherWidget';
  *   Row 2: System Status (list) + Pending Approvals (empty state) + Live Notifications
  *   Row 3: Recent Orders table + Top Products list
  *
- * Includes a "Reset Dashboard" button that wipes all MongoDB data and re-seeds
- * from mock data (useful for demos and testing).
+ * Includes a destructive reset that clears application data while retaining
+ * the Super Admin account for future access.
  */
 export const AdminDashboard: React.FC = () => {
   const { orders, products, formatPrice, addToast, setAdminTab, brandingLogoUrl, setBrandingLogoUrl } = useStore();
@@ -119,7 +119,7 @@ export const AdminDashboard: React.FC = () => {
   // Order breakdown — most orders completed
   const completedOrders = orders.filter(o => o.orderStatus === 'completed').length;
   const processingOrders = orders.filter(o => o.orderStatus === 'processing').length;
-  const totalOrdersCount = orders.length || 2;
+  const totalOrdersCount = orders.length;
   const completionRate = totalOrdersCount > 0 ? Math.round((completedOrders / totalOrdersCount) * 100) : 100;
 
   // Traffic sources (deterministic)
@@ -253,7 +253,7 @@ export const AdminDashboard: React.FC = () => {
             <div className="text-[10px] uppercase text-cyan-100 tracking-wider font-mono font-bold">Total Customers</div>
             <Users className="w-4 h-4 text-cyan-200" />
           </div>
-          <div className="text-2xl font-bold text-white font-mono">248</div>
+          <div className="text-2xl font-bold text-white font-mono">{products.length === 0 && orders.length === 0 ? 0 : 248}</div>
           <div className="text-[10px] text-cyan-200 mt-1 flex items-center gap-1">
             <ArrowUpRight className="w-3 h-3" /> +9.7% vs last period
           </div>
@@ -601,7 +601,7 @@ export const AdminDashboard: React.FC = () => {
               </div>
               <div className="p-3 rounded-lg bg-red-500/5 border border-red-500/20 text-[11px] text-red-300 leading-relaxed mb-4">
                 <AlertTriangle className="w-4 h-4 inline mr-1" />
-                This will permanently delete ALL data in MongoDB (products, orders, users, coupons, logs) and re-seed with default mock data. This action cannot be undone.
+                This permanently clears all application data in MongoDB (products, orders, customers, coupons, logs, and settings). The Super Admin account is retained so you can sign in again. This action cannot be undone.
               </div>
               <div>
                 <label className="block text-[11px] text-gray-400 mb-1">Type <span className="font-mono font-bold text-red-400">RESET</span> to confirm</label>
@@ -775,7 +775,7 @@ export const AdminDashboard: React.FC = () => {
                     <span>Reset Database (Destructive)</span>
                   </button>
                   <p className="text-[10px] text-gray-500 mt-2 text-center leading-relaxed">
-                    Wipes all MongoDB collections and re-seeds with default data.
+                    Clears application data to zero and retains only Super Admin access.
                   </p>
                 </div>
               </div>

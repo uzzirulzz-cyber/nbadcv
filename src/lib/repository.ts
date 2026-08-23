@@ -48,6 +48,7 @@ let memAdminLogs: AdminLog[] = [...INITIAL_ADMIN_LOGS];
 let memImportJobs: ImportJob[] = [];
 let memG2GConnector: G2GSupplierConnector = { ...INITIAL_G2G_CONNECTOR };
 let memContent: ContentSection = { ...INITIAL_CONTENT };
+let zeroStateReset = false;
 
 // ============================================================
 // Seeding — populates MongoDB on first boot if collections are empty
@@ -61,6 +62,12 @@ async function seedIfEmpty(): Promise<void> {
   seedPromise = (async () => {
     try {
       const db = await getDb();
+
+      const resetMarker = await db.collection('system_state').findOne({ id: 'reset-state', zeroState: true });
+      if (resetMarker) {
+        console.info('[repository] Zero-state reset is active — skipping automatic seed.');
+        return;
+      }
 
       // Check products first — if they exist, the catalog was already seeded.
       // But we ALWAYS upsert the default admin so its password hash is current.
@@ -499,27 +506,23 @@ export async function changeUserPassword(id: string, newPassword: string): Promi
  * Used by the "Reset Dashboard" button in the admin panel.
  * DANGEROUS: this wipes all orders, users, products, etc.
  *
- * Resilience: if MongoDB is unreachable (cold start, network firewall),
- * the function falls back to the in-memory arrays so the admin still sees
- * a "fresh" catalog after the page reloads. The next time Mongo is reachable,
- * the seedIfEmpty() call on the next read will re-seed the live DB.
+ * Reset leaves application collections empty. The Super Admin account is
+ * retained so the operator can sign in and import new data afterward.
  */
 export async function resetDatabase(): Promise<void> {
-  // Always reset in-memory arrays first — this is what the admin UI reads
-  // when Mongo is unreachable, and it's also a fast local mirror that
-  // gets re-synced from Mongo on the next request.
-  memProducts = [...CUSTOM_PRODUCTS];
-  memCategories = [...CUSTOM_CATEGORIES];
-  memUsers = [...INITIAL_USERS];
-  memOrders = [...INITIAL_ORDERS];
-  memCoupons = [...INITIAL_COUPONS];
-  memAdminLogs = [...INITIAL_ADMIN_LOGS];
+  memProducts = [];
+  memCategories = [];
+  memUsers = memUsers.filter(u => u.role === 'super_admin');
+  memOrders = [];
+  memCoupons = [];
+  memAdminLogs = [];
   memImportJobs = [];
-  memG2GConnector = { ...INITIAL_G2G_CONNECTOR };
-  memContent = { ...INITIAL_CONTENT };
+  memG2GConnector = {} as G2GSupplierConnector;
+  memContent = {} as ContentSection;
+  zeroStateReset = true;
 
-  // Force re-seed on next access
-  seedPromise = null;
+  // Keep the zero-state decision for this server instance.
+  seedPromise = Promise.resolve();
   // Clear the cached Mongo client so the next request gets a fresh connection
   globalThis.__mongoConnPromise = undefined;
   globalThis.__mongoClient = undefined;
@@ -536,12 +539,20 @@ export async function resetDatabase(): Promise<void> {
       'products', 'categories', 'users', 'orders', 'coupons',
       'admin_logs', 'g2g_connector', 'content', 'import_jobs',
     ];
-    await Promise.all(collections.map(name => db.collection(name).deleteMany({})));
-    console.info('[repository] Database reset: all MongoDB collections wiped. Re-seeding on next read.');
+    await Promise.all([
+      ...collections.filter(name => name !== 'users').map(name => db.collection(name).deleteMany({})),
+      db.collection('users').deleteMany({ role: { $ne: 'super_admin' } }),
+      db.collection('system_state').updateOne(
+        { id: 'reset-state' },
+        { $set: { id: 'reset-state', zeroState: true, updatedAt: new Date().toISOString() } },
+        { upsert: true },
+      ),
+    ]);
+    console.info('[repository] Database reset: application data cleared; Super Admin retained.');
   } catch (err) {
     console.warn(
       '[repository] Database reset: MongoDB unreachable, only in-memory arrays were reset. ' +
-      'The live DB will be re-seeded on the next successful connection.',
+      'The in-memory zero state remains active until the server restarts.',
       (err as Error)?.message?.substring(0, 100)
     );
   }

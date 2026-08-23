@@ -200,13 +200,13 @@ export const ProductManagement: React.FC = () => {
 
   // Reset database
   const handleResetDb = async () => {
-    if (!window.confirm('This will DELETE all products, orders, users, and settings. The database will be re-seeded with default data. Continue?')) return;
+    if (!window.confirm('This will DELETE all products, orders, customers, and settings. The Super Admin account will be retained, but all application data will be reset to zero. Continue?')) return;
     setIsResetting(true);
     try {
       const res = await fetch('/api/admin/reset-db', { method: 'POST' });
       const data = await res.json();
       if (data.success) {
-        addToast('success', 'Database Reset', 'All data wiped and re-seeded. Reloading...');
+        addToast('success', 'Database Reset', 'All application data is now zero. Super Admin access was retained. Reloading...');
         setTimeout(() => window.location.reload(), 1500);
       } else {
         addToast('error', 'Reset Failed', data.error || 'Could not reset database.');
@@ -387,7 +387,7 @@ export const ProductManagement: React.FC = () => {
             onClick={handleResetDb}
             disabled={isResetting}
             className="pb-btn pb-btn-dark pb-btn-sm"
-            title="Wipe and re-seed the database (destructive!)"
+            title="Clear all application data to zero (destructive!)"
           >
             {isResetting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RotateCcw className="w-3.5 h-3.5" />}
             <span>Reset DB</span>

@@ -22,6 +22,38 @@
   box-shadow: inset 0 1px 0 rgba(255,255,255,.04);
 }
 
+/* Admin palette follows the supplied PlayBeat red/orange logo. */
+.admin-skin .admin-sidebar {
+  border-right-color: rgba(255, 91, 36, .28);
+}
+
+.admin-skin .admin-card {
+  border-color: rgba(125, 49, 37, .72);
+}
+
+.admin-skin .admin-card:hover {
+  border-color: rgba(255, 137, 45, .55);
+}
+
+.admin-skin .admin-nav-item.is-active {
+  background: linear-gradient(90deg, rgba(239, 68, 68, .2), rgba(245, 158, 11, .06));
+  box-shadow: 0 0 14px rgba(239, 68, 68, .12);
+}
+
+.admin-skin .admin-nav-item.is-active::before {
+  background: linear-gradient(180deg, #ff7a18, #ef4444);
+  box-shadow: 0 0 8px rgba(255, 122, 24, .55);
+}
+
+.admin-skin .admin-section-header {
+  background: linear-gradient(180deg, #ff7a18 0%, #d92d20 100%);
+}
+
+.admin-skin .admin-footer-profile,
+.admin-skin .admin-skin-logo {
+  border-color: rgba(255, 122, 24, .42);
+}
+
 .header-cart {
   min-width: 5.5rem;
 }
