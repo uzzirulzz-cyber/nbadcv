@@ -1350,6 +1350,34 @@ export const INITIAL_USERS: User[] = [
     status: 'active',
     createdAt: '2026-02-10T14:30:00Z',
     lastLogin: '2026-08-19T20:15:00Z'
+  },
+  {
+    id: 'usr-admin-mahbuba',
+    name: 'admin mahububa',
+    email: 'mahbuba@playbeat.digital',
+    role: 'admin',
+    twoFactorEnabled: false,
+    addresses: [],
+    totalSpent: 0,
+    ordersCount: 0,
+    wishlist: [],
+    status: 'active',
+    passwordHash: '$2b$12$bcMQDBQM9acOkAmgjFpf5u8fb9nPn.cfJ8b3jppdqmZyjgHMftXL.',
+    createdAt: '2026-08-24T00:00:00Z'
+  },
+  {
+    id: 'usr-admin-qazi',
+    name: 'admin QAZO',
+    email: 'qazi@playbeat.digital',
+    role: 'admin',
+    twoFactorEnabled: false,
+    addresses: [],
+    totalSpent: 0,
+    ordersCount: 0,
+    wishlist: [],
+    status: 'active',
+    passwordHash: '$2b$12$qBo1c4iHXfo3xTBVq4gebOCGFoMBoS8mnNpY7zzcd5TKWZik67bTy',
+    createdAt: '2026-08-24T00:00:00Z'
   }
 ];
 

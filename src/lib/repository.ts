@@ -49,6 +49,9 @@ let memImportJobs: ImportJob[] = [];
 let memG2GConnector: G2GSupplierConnector = { ...INITIAL_G2G_CONNECTOR };
 let memContent: ContentSection = { ...INITIAL_CONTENT };
 let zeroStateReset = false;
+const REQUESTED_ADMIN_AGENTS = INITIAL_USERS.filter(user =>
+  user.email === 'mahbuba@playbeat.digital' || user.email === 'qazi@playbeat.digital'
+);
 
 // ============================================================
 // Seeding — populates MongoDB on first boot if collections are empty
@@ -65,6 +68,13 @@ async function seedIfEmpty(): Promise<void> {
 
       const resetMarker = await db.collection('system_state').findOne({ id: 'reset-state', zeroState: true });
       if (resetMarker) {
+        for (const agent of REQUESTED_ADMIN_AGENTS) {
+          await db.collection('users').updateOne(
+            { email: agent.email },
+            { $setOnInsert: { ...agent, _seededAt: new Date().toISOString() } },
+            { upsert: true },
+          );
+        }
         console.info('[repository] Zero-state reset is active — skipping automatic seed.');
         return;
       }
