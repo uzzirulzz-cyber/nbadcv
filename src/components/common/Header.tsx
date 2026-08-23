@@ -444,24 +444,6 @@ export const Header: React.FC = () => {
             </span>
           </button>
 
-          {/* SIGN-IN ACTION — kept in the main row beside cart */}
-          {currentUser.id === 'guest' && (
-            <div className="hidden lg:flex items-center gap-1.5">
-              <button
-                onClick={() => { setAuthMode('login'); setIsAuthModalOpen(true); }}
-                className="px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all"
-              >
-                Sign In
-              </button>
-              <button
-                onClick={() => { setAuthMode('signup'); setIsAuthModalOpen(true); }}
-                className="btn-glossy btn-glossy-yellow btn-glossy-sm !px-3 !py-1.5 !text-[10px]"
-              >
-                Sign Up
-              </button>
-            </div>
-          )}
-
           {/* USER ACCOUNT BUTTON */}
           <div className="relative">
             <button
@@ -564,8 +546,8 @@ export const Header: React.FC = () => {
 
       {/* 5. QUICK NAVIGATION BAR (SUB-HEADER WITH PROMO & CUSTOM NAV ITEMS) */}
       <div className="hidden md:block w-full border-t border-[#26334A] bg-[#070B14] px-4 sm:px-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar py-1.5 text-xs uppercase tracking-wider">
-          <div className="flex items-center gap-5 text-xs text-slate-300 font-medium">
+        <div className="max-w-7xl mx-auto flex items-center justify-between overflow-x-auto no-scrollbar py-1 text-xs uppercase tracking-wider">
+          <div className="flex items-center gap-3 text-xs text-slate-300 font-medium">
             <button
               onClick={() => handleNavClick('all')}
               className={`hover:text-[#1769FF] transition-colors ${
@@ -613,7 +595,7 @@ export const Header: React.FC = () => {
             })}
           </div>
 
-          <div className="flex items-center gap-4 shrink-0 pl-6 border-l border-[#26334A]">
+          <div className="flex items-center gap-3 shrink-0 pl-4 border-l border-[#26334A]">
             <button
               onClick={() => handleNavClick('flash-deals')}
               className="flex items-center gap-1.5 text-[#FF304F] font-bold hover:text-[#ff6b81] transition-colors text-xs uppercase tracking-widest"
@@ -621,6 +603,22 @@ export const Header: React.FC = () => {
               <Flame className="w-3.5 h-3.5 text-[#FF304F]" />
               <span>Cyber Drops</span>
             </button>
+            {currentUser.id === 'guest' && (
+              <div className="flex items-center gap-1.5 border-l border-[#26334A] pl-4">
+                <button
+                  onClick={() => { setAuthMode('login'); setIsAuthModalOpen(true); }}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all"
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => { setAuthMode('signup'); setIsAuthModalOpen(true); }}
+                  className="btn-glossy btn-glossy-yellow btn-glossy-sm !px-3 !py-1 !text-[10px]"
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -36,7 +36,7 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--pb-ink)] border-b border-[var(--pb-line)] pt-8 pb-16 lg:py-20 px-4 sm:px-6">
-      {/* Navy and gold ambient glow matched to the PlayBeat logo */}
+      {/* Navy and gold ambient glow for the premium storefront hero */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#071d58]/30 via-white/[0.02] to-[#facc15]/[0.10] rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-10 right-10 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
