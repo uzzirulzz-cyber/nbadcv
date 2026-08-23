@@ -307,11 +307,11 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [brandingLogoUrl, setBrandingLogoUrl] = useState<string>(() => {
     try {
       const storedLogo = localStorage.getItem('playbeat-branding-logo');
-      return storedLogo && storedLogo !== '/assets/playbeat-logo.svg'
+      return storedLogo && !['/assets/playbeat-logo.svg', '/assets/logo.png.jpeg'].includes(storedLogo)
         ? storedLogo
-        : '/assets/logo.png.jpeg';
+        : '/assets/playbeat-logo.png';
     } catch {
-      return '/assets/logo.png.jpeg';
+      return '/assets/playbeat-logo.png';
     }
   });
 
