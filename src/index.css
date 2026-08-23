@@ -1,5 +1,37 @@
 @import "tailwindcss";
 
+/* Storefront header rhythm: keep account actions distinct from cart and nav links. */
+.header-actions {
+  flex-shrink: 0;
+  margin-left: .5rem;
+}
+
+.header-cart {
+  min-width: 5.5rem;
+}
+
+.header-profile {
+  margin-left: .25rem;
+  padding-left: .75rem;
+  border-left: 1px solid rgba(38, 51, 74, .9);
+}
+
+.header-auth-actions button {
+  min-height: 1.9rem;
+}
+
+.admin-branding-preview {
+  width: 350px;
+  height: 200px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 1023px) {
+  .header-actions { gap: .625rem; margin-left: .25rem; }
+  .header-profile { margin-left: 0; padding-left: .5rem; }
+}
+
 /* Reference dashboard frame: dark navy canvas, 270px rail, compact neon accents. */
 .dashboard-reference {
   max-width: none;

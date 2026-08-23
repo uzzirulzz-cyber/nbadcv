@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useStore } from '../../context/StoreContext';
 import { AdminDashboard } from './AdminDashboard';
 import { NavigationManager } from './NavigationManager';
@@ -62,6 +62,7 @@ import {
   ChevronDown,
   Bell,
   Plus,
+  Upload,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -164,10 +165,30 @@ const findActiveLabel = (id: string): string => {
 const COMING_SOON_META: Record<string, { description: string; features: string[] }> = {};
 
 export const AdminLayout: React.FC = () => {
-  const { setActiveView, currentUser, setCurrentUser, setIsAuthModalOpen, adminTab, setAdminTab, addToast, brandingLogoUrl } = useStore();
+  const { setActiveView, currentUser, setCurrentUser, setIsAuthModalOpen, adminTab, setAdminTab, addToast, brandingLogoUrl, setBrandingLogoUrl } = useStore();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const brandingInputRef = useRef<HTMLInputElement>(null);
+
+  const handleBrandingUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) {
+      addToast('error', 'Logo Too Large', 'Please choose an image smaller than 2 MB.');
+      event.target.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === 'string') {
+        setBrandingLogoUrl(reader.result);
+        addToast('success', 'Branding Updated', 'The logo now updates the storefront and admin profile.');
+      }
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  };
 
   const handleSignOut = () => {
     useAuthStore.getState().logout();
@@ -377,6 +398,21 @@ export const AdminLayout: React.FC = () => {
 
       {/* Sidebar footer — Themes, Nav Customizer + Sign Out */}
       <div className="border-t border-[#1f2937] p-3 space-y-0.5">
+        <input
+          ref={brandingInputRef}
+          type="file"
+          accept="image/png,image/jpeg,image/webp,image/svg+xml"
+          className="sr-only"
+          onChange={handleBrandingUpload}
+        />
+        <button
+          onClick={() => brandingInputRef.current?.click()}
+          className="admin-nav-item"
+          title="Edit logo and admin profile picture"
+        >
+          <Upload className="w-4 h-4 shrink-0 text-cyan-400" />
+          <span className="flex-1 text-left truncate sidebar-footer-text">Edit Branding</span>
+        </button>
         <button
           onClick={() => handleTabSelect('content')}
           className={`admin-nav-item ${adminTab === 'content' ? 'is-active' : ''}`}

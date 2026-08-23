@@ -716,8 +716,8 @@ export const AdminDashboard: React.FC = () => {
                 <div className="pt-3 border-t border-white/10">
                   <label className="block text-[11px] text-gray-400 mb-2 font-mono uppercase tracking-wider">Brand Logo & Admin Profile Picture</label>
                   <div className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 p-3">
-                    <div className="w-20 h-14 rounded-lg bg-[#071d58] border border-[#facc15]/30 flex items-center justify-center overflow-hidden shrink-0">
-                      <img src={brandingLogoUrl} alt="Current PlayBeat logo" className="max-w-full max-h-full object-contain" />
+                    <div className="w-[350px] h-[200px] max-w-full rounded-lg bg-[#071d58] border border-[#facc15]/30 flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={brandingLogoUrl} alt="Current PlayBeat logo" className="admin-branding-preview max-w-full max-h-full object-contain" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="text-xs text-white font-semibold">Use one logo everywhere</p>

@@ -376,7 +376,7 @@ export const Header: React.FC = () => {
         </div>
 
         {/* 4. ACTIONS & SHORTCUTS */}
-        <div className="flex items-center gap-2.5">
+        <div className="header-actions flex items-center gap-3 lg:gap-4">
           {/* CURRENCY SELECTOR */}
           <div className="relative hidden lg:block">
             <button
@@ -430,7 +430,7 @@ export const Header: React.FC = () => {
           {/* CART BUTTON */}
           <button
             onClick={() => setIsCartOpen(true)}
-            className="btn-glossy btn-glossy-dark btn-glossy-sm flex items-center gap-2"
+            className="header-cart btn-glossy btn-glossy-dark btn-glossy-sm flex items-center gap-2"
             aria-label="View Cart"
           >
             <div className="relative">
@@ -445,7 +445,7 @@ export const Header: React.FC = () => {
           </button>
 
           {/* USER ACCOUNT BUTTON */}
-          <div className="relative">
+          <div className="header-profile relative">
             <button
               onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
               className="flex items-center gap-2 p-1 text-slate-400 hover:text-white transition-colors"
@@ -595,7 +595,7 @@ export const Header: React.FC = () => {
             })}
           </div>
 
-          <div className="flex items-center gap-3 shrink-0 pl-4 border-l border-[#26334A]">
+          <div className="flex items-center gap-5 shrink-0 pl-6 border-l border-[#26334A]">
             <button
               onClick={() => handleNavClick('flash-deals')}
               className="flex items-center gap-1.5 text-[#FF304F] font-bold hover:text-[#ff6b81] transition-colors text-xs uppercase tracking-widest"
@@ -604,7 +604,7 @@ export const Header: React.FC = () => {
               <span>Cyber Drops</span>
             </button>
             {currentUser.id === 'guest' && (
-              <div className="flex items-center gap-1.5 border-l border-[#26334A] pl-4">
+              <div className="header-auth-actions flex items-center gap-2.5 border-l border-[#26334A] pl-5">
                 <button
                   onClick={() => { setAuthMode('login'); setIsAuthModalOpen(true); }}
                   className="px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 transition-all"
