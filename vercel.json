@@ -15,7 +15,7 @@
     { "source": "/terms/", "destination": "/terms/index.html" },
     { "source": "/policy", "destination": "/policy/index.html" },
     { "source": "/policy/", "destination": "/policy/index.html" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|terms(?:/.*)?$|policy(?:/.*)?$).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
