@@ -34,6 +34,7 @@ import {
   Tag,
   Palette,
   Layers,
+  Upload,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -61,7 +62,7 @@ import { WeatherWidget } from './WeatherWidget';
  * from mock data (useful for demos and testing).
  */
 export const AdminDashboard: React.FC = () => {
-  const { orders, products, formatPrice, addToast, setAdminTab } = useStore();
+  const { orders, products, formatPrice, addToast, setAdminTab, brandingLogoUrl, setBrandingLogoUrl } = useStore();
   const [isResetOpen, setIsResetOpen] = useState(false);
   const [resetting, setResetting] = useState(false);
   const [confirmText, setConfirmText] = useState('');
@@ -907,6 +908,56 @@ export const AdminDashboard: React.FC = () => {
                       <span>Storefront Content</span>
                     </button>
                   </div>
+                </div>
+
+                {/* Shared logo / admin profile picture */}
+                <div className="pt-3 border-t border-white/10">
+                  <label className="block text-[11px] text-gray-400 mb-2 font-mono uppercase tracking-wider">Brand Logo & Admin Profile Picture</label>
+                  <div className="flex items-center gap-3 rounded-xl bg-black/20 border border-white/10 p-3">
+                    <div className="w-20 h-14 rounded-lg bg-[#071d58] border border-[#facc15]/30 flex items-center justify-center overflow-hidden shrink-0">
+                      <img src={brandingLogoUrl} alt="Current PlayBeat logo" className="max-w-full max-h-full object-contain" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs text-white font-semibold">Use one logo everywhere</p>
+                      <p className="text-[10px] text-gray-500 mt-1">Header, footer, hero banner, and admin profile.</p>
+                    </div>
+                    <label className="cursor-pointer px-3 py-2 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 text-[10px] font-bold uppercase tracking-wider border border-purple-500/30 flex items-center gap-1.5 shrink-0">
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>Upload</span>
+                      <input
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                        className="sr-only"
+                        onChange={(event) => {
+                          const file = event.target.files?.[0];
+                          if (!file) return;
+                          if (file.size > 2 * 1024 * 1024) {
+                            addToast('error', 'Logo Too Large', 'Please choose an image smaller than 2 MB.');
+                            event.target.value = '';
+                            return;
+                          }
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            if (typeof reader.result === 'string') {
+                              setBrandingLogoUrl(reader.result);
+                              addToast('success', 'Logo Updated', 'The new logo is now used across the storefront and admin panel.');
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                          event.target.value = '';
+                        }}
+                      />
+                    </label>
+                  </div>
+                  <button
+                    onClick={() => {
+                      setBrandingLogoUrl('/assets/playbeat-logo.svg');
+                      addToast('success', 'Logo Reset', 'The default PlayBeat logo has been restored.');
+                    }}
+                    className="mt-2 text-[10px] text-gray-500 hover:text-white underline underline-offset-2"
+                  >
+                    Restore default logo
+                  </button>
                 </div>
 
                 {/* Reset DB shortcut */}

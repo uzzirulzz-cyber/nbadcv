@@ -162,7 +162,7 @@ const findActiveLabel = (id: string): string => {
 const COMING_SOON_META: Record<string, { description: string; features: string[] }> = {};
 
 export const AdminLayout: React.FC = () => {
-  const { setActiveView, currentUser, setCurrentUser, setIsAuthModalOpen, adminTab, setAdminTab, addToast } = useStore();
+  const { setActiveView, currentUser, setCurrentUser, setIsAuthModalOpen, adminTab, setAdminTab, addToast, brandingLogoUrl } = useStore();
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isCategoryMenuOpen, setIsCategoryMenuOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -317,7 +317,7 @@ export const AdminLayout: React.FC = () => {
     <>
       {/* Brand strip + collapse toggle */}
       <div className="px-5 py-4 border-b border-[#1f2937] flex items-center gap-2.5">
-        <img src="/assets/playbeat-logo.svg" alt="PlayBeat Digital" className="w-12 h-8 object-contain shrink-0" />
+        <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-12 h-8 object-contain shrink-0" />
         <div className="sidebar-brand-text min-w-0 flex-1">
           <div className="text-sm font-bold text-white font-display truncate">PlayBeat Digital</div>
           <div className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">Admin Console</div>
@@ -335,8 +335,8 @@ export const AdminLayout: React.FC = () => {
       {/* User Profile area */}
       <div className="p-3 border-b border-[#1f2937]">
         <div className="sidebar-profile">
-          <div className="sidebar-profile-avatar">
-            {currentUser.name.charAt(0).toUpperCase()}
+          <div className="sidebar-profile-avatar overflow-hidden">
+            <img src={brandingLogoUrl} alt="Admin profile" className="w-full h-full object-contain" />
           </div>
           <div className="sidebar-profile-info">
             <div className="sidebar-profile-name">{currentUser.name}</div>

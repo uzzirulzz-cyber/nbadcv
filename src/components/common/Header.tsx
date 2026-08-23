@@ -64,6 +64,7 @@ export const Header: React.FC = () => {
     navItems,
     activePromoFilter,
     setActivePromoFilter,
+    brandingLogoUrl,
     addToast
   } = useStore();
 
@@ -209,7 +210,7 @@ export const Header: React.FC = () => {
             aria-label="PlayBeat Digital Home"
           >
             <img
-              src="/assets/playbeat-logo.svg"
+              src={brandingLogoUrl}
               alt="PlayBeat Digital"
               className="w-36 sm:w-44 h-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
             />

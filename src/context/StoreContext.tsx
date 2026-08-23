@@ -160,6 +160,8 @@ export interface StoreContextType {
   currentUser: User;
   switchUserRole: (role: User['role']) => void;
   setCurrentUser: (u: User) => void;
+  brandingLogoUrl: string;
+  setBrandingLogoUrl: (url: string) => void;
   
   // Orders
   orders: Order[];
@@ -301,6 +303,23 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [isCustomerPortalOpen, setIsCustomerPortalOpen] = useState(false);
   const [isWhatsAppModalOpen, setIsWhatsAppModalOpen] = useState(false);
   const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
+  const [brandingLogoUrl, setBrandingLogoUrl] = useState<string>(() => {
+    try {
+      return localStorage.getItem('playbeat-branding-logo') || '/assets/playbeat-logo.svg';
+    } catch {
+      return '/assets/playbeat-logo.svg';
+    }
+  });
+
+  const updateBrandingLogoUrl = (url: string) => {
+    setBrandingLogoUrl(url);
+    try {
+      if (url) localStorage.setItem('playbeat-branding-logo', url);
+      else localStorage.removeItem('playbeat-branding-logo');
+    } catch {
+      // Ignore storage failures while keeping the current session updated.
+    }
+  };
 
   // ====== IPTV M3U Servers state ======
   const [iptvServers, setIptvServers] = useState<IptvServer[]>(INITIAL_IPTV_SERVERS);
@@ -1248,6 +1267,8 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         currentUser,
         switchUserRole,
         setCurrentUser,
+        brandingLogoUrl,
+        setBrandingLogoUrl: updateBrandingLogoUrl,
         
         orders,
         createOrder,
