@@ -243,6 +243,24 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} PlayBeat Digital (playbeat.digital). All Rights Reserved.
           </div>
 
+          <a
+            href="https://playbeat.digital/policy"
+            target="_blank"
+            rel="noreferrer"
+            className="text-zinc-300 hover:text-white transition-colors underline underline-offset-4"
+          >
+            Privacy Policy
+          </a>
+
+          <a
+            href="https://playbeat.digital/terms"
+            target="_blank"
+            rel="noreferrer"
+            className="text-zinc-300 hover:text-white transition-colors underline underline-offset-4"
+          >
+            Terms of Service
+          </a>
+
           <div className="flex items-center gap-3 text-zinc-400 font-mono text-[11px] tracking-wider uppercase">
             <span>STRIPE</span>
             <span>•</span>
