@@ -29,6 +29,7 @@ import {
   INITIAL_COUPONS,
   INITIAL_ADMIN_LOGS,
 } from '../data/mockData.js';
+import { CUSTOM_CATEGORIES, CUSTOM_PRODUCTS } from '../data/customCatalog.js';
 import type {
   Product, Category, User, Order, Coupon, AdminLog,
   G2GSupplierConnector, ContentSection, ImportJob, OrderStatus,
@@ -38,8 +39,8 @@ import { hashPassword } from './auth.js';
 // ============================================================
 // In-memory fallback state (used when MongoDB is not configured)
 // ============================================================
-let memProducts: Product[] = [...INITIAL_PRODUCTS];
-let memCategories: Category[] = [...INITIAL_CATEGORIES];
+let memProducts: Product[] = [...CUSTOM_PRODUCTS];
+let memCategories: Category[] = [...CUSTOM_CATEGORIES];
 let memUsers: User[] = [...INITIAL_USERS];
 let memOrders: Order[] = [...INITIAL_ORDERS];
 let memCoupons: Coupon[] = [...INITIAL_COUPONS];
@@ -104,10 +105,10 @@ async function seedIfEmpty(): Promise<void> {
       // if some collections were partially seeded from a previous run.
       // (Note: `now` was already declared above for the admin upsert.)
 
-      const productOps = INITIAL_PRODUCTS.map(p => ({
+      const productOps = CUSTOM_PRODUCTS.map(p => ({
         replaceOne: { filter: { id: p.id }, replacement: { ...p, _seededAt: now }, upsert: true }
       }));
-      const categoryOps = INITIAL_CATEGORIES.map(c => ({
+      const categoryOps = CUSTOM_CATEGORIES.map(c => ({
         replaceOne: { filter: { id: c.id }, replacement: { ...c, _seededAt: now }, upsert: true }
       }));
       const userOps = INITIAL_USERS.map(u => ({
@@ -507,8 +508,8 @@ export async function resetDatabase(): Promise<void> {
   // Always reset in-memory arrays first — this is what the admin UI reads
   // when Mongo is unreachable, and it's also a fast local mirror that
   // gets re-synced from Mongo on the next request.
-  memProducts = [...INITIAL_PRODUCTS];
-  memCategories = [...INITIAL_CATEGORIES];
+  memProducts = [...CUSTOM_PRODUCTS];
+  memCategories = [...CUSTOM_CATEGORIES];
   memUsers = [...INITIAL_USERS];
   memOrders = [...INITIAL_ORDERS];
   memCoupons = [...INITIAL_COUPONS];

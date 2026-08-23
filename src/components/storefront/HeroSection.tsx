@@ -29,31 +29,42 @@ export const HeroSection: React.FC = () => {
     products,
     setIsCompareModalOpen,
     formatPrice,
-    setActivePromoFilter
+    setActivePromoFilter,
+    brandingLogoUrl
   } = useStore();
 
   const featuredProjector = products.find(p => p.id === 'proj-cinebeam-4k') || products[0];
 
   return (
     <section className="relative w-full overflow-hidden bg-[var(--pb-ink)] border-b border-[var(--pb-line)] pt-8 pb-16 lg:py-20 px-4 sm:px-6">
-      {/* Sophisticated Subtle Red/White Ambient Glow */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[var(--pb-red)]/[0.06] via-white/[0.02] to-[var(--pb-red-bright)]/[0.04] rounded-full blur-[140px] pointer-events-none" />
+      {/* Navy and gold ambient glow matched to the PlayBeat logo */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-gradient-to-tr from-[#071d58]/30 via-white/[0.02] to-[#facc15]/[0.10] rounded-full blur-[140px] pointer-events-none" />
       <div className="absolute top-10 right-10 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center relative z-10">
         {/* LEFT COLUMN: HERO TEXT & SEARCH */}
         <div className="lg:col-span-7 space-y-6">
+          {/* PlayBeat Logo – Responsive Mobile & Desktop */}
+          <div className="inline-block mb-2">
+            <img
+              src={brandingLogoUrl}
+              alt="PlayBeat Digital"
+              className="w-32 sm:w-40 lg:w-56 h-auto object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.3)]"
+            />
+          </div>
+
           {/* Highlight Badge */}
           <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--pb-charcoal)] border border-[var(--pb-line)] text-xs font-mono uppercase tracking-[0.2em] shadow-lg">
-            <span className="flex h-2 w-2 rounded-full bg-[var(--pb-red-bright)] shadow-[0_0_10px_rgba(225,29,46,0.8)] animate-pulse" />
-            <span className="text-[var(--pb-red-bright)] font-bold">{content.heroBanner.highlightBadge}</span>
+            <span className="flex h-2 w-2 rounded-full bg-[#facc15] shadow-[0_0_10px_rgba(250,204,21,0.8)] animate-pulse" />
+            <span className="text-[#facc15] font-bold">{content.heroBanner.highlightBadge}</span>
             <span className="text-[var(--pb-silver-4)]">/</span>
             <span className="text-[var(--pb-silver)]">Instant Key Dispatch & 4K Laser</span>
           </div>
 
           {/* Main Headline */}
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white font-display tracking-tight leading-[1.1]">
-            PlayBeat <span className="text-white">Global Access</span> to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--pb-red-bright)] via-white to-[var(--pb-red)]">Premium Digital + Cinema</span>
+            <span className="text-white">Play</span><span className="text-[#facc15]">Beat</span>{' '}
+            <span className="text-white">Global Access</span> to <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#facc15] via-white to-[#60a5fa]">Premium Digital + Cinema</span>
           </h1>
 
           {/* Subtitle */}

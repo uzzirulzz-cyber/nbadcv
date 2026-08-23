@@ -67,6 +67,7 @@ import {
   INITIAL_LOGIN_ATTEMPTS,
   INITIAL_SECRET_ROTATIONS,
 } from '../data/mockData';
+import { CUSTOM_CATEGORIES, CUSTOM_PRODUCTS } from '../data/customCatalog';
 
 export interface CartItem {
   productId: string;
@@ -283,8 +284,8 @@ export interface StoreContextType {
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
 
 export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [categories] = useState<Category[]>(INITIAL_CATEGORIES);
+  const [products, setProducts] = useState<Product[]>(CUSTOM_PRODUCTS);
+  const [categories] = useState<Category[]>(CUSTOM_CATEGORIES);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [productTypeFilter, setProductTypeFilter] = useState<'all' | 'digital' | 'physical_projector'>('all');
@@ -371,7 +372,7 @@ export const StoreProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [cart, setCart] = useState<CartItem[]>([]);
 
   const [wishlist, setWishlist] = useState<string[]>([]);
-  const [compareList, setCompareList] = useState<Product[]>([INITIAL_PRODUCTS[0], INITIAL_PRODUCTS[1]]);
+  const [compareList, setCompareList] = useState<Product[]>(CUSTOM_PRODUCTS.filter(p => p.productType === 'physical_projector').slice(0, 2));
   // Start as a GUEST — no profile pre-loaded. Users must explicitly sign in.
   // The super admin is NOT auto-loaded on app start.
   const GUEST_USER: User = {

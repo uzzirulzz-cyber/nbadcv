@@ -405,7 +405,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ className = '', co
               <div className="flex items-center gap-3">
                 {/* Weather icon (large) */}
                 <div className="w-12 h-12 flex items-center justify-center">
-                  {React.cloneElement(currentWeather.icon as React.ReactElement, { className: 'w-10 h-10 ' + currentWeather.color })}
+                  {React.cloneElement(currentWeather.icon as React.ReactElement<{ className?: string }>, { className: 'w-10 h-10 ' + currentWeather.color })}
                 </div>
                 <div>
                   <div className="text-3xl font-black text-white font-mono leading-none">
@@ -439,7 +439,7 @@ export const WeatherWidget: React.FC<WeatherWidgetProps> = ({ className = '', co
                         {DAY_NAMES[d.getDay()]}
                       </div>
                       <div className="my-1">
-                        {React.cloneElement(info.icon as React.ReactElement, { className: 'w-5 h-5 ' + info.color })}
+                        {React.cloneElement(info.icon as React.ReactElement<{ className?: string }>, { className: 'w-5 h-5 ' + info.color })}
                       </div>
                       <div className="text-[11px] font-mono font-bold text-white">
                         {Math.round(weather.daily.tempMax[i + 1])}°

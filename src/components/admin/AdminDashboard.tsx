@@ -177,8 +177,8 @@ export const AdminDashboard: React.FC = () => {
             <Activity className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-white font-display">Executive Dashboard</h1>
-            <p className="text-xs text-gray-500 mt-0.5">Live metrics, orders, and product performance.</p>
+            <h1 className="text-xl font-bold text-white font-display">Welcome back, PlayBeat Admin! 👋</h1>
+            <p className="text-xs text-gray-500 mt-0.5">Here’s what’s happening with your business today.</p>
           </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
@@ -244,7 +244,7 @@ export const AdminDashboard: React.FC = () => {
           Uses the free Open-Meteo API (no API key required).
           City is persisted to localStorage so the user's choice is remembered.
           ============================================ */}
-      <WeatherWidget />
+      <div className="hidden"><WeatherWidget /></div>
 
       {/* ============================================
           COLORFUL KPI CARDS WITH SPARKLINES (Flare UI style)
@@ -252,7 +252,7 @@ export const AdminDashboard: React.FC = () => {
           ============================================ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Revenue — emerald glossy card */}
-        <button className="text-left rounded-xl p-5 overflow-hidden relative border-2 border-emerald-400/30 transition-all hover:-translate-y-0.5"
+        <button className="dashboard-kpi dashboard-kpi-revenue text-left rounded-xl p-5 overflow-hidden relative border-2 border-emerald-400/30 transition-all hover:-translate-y-0.5"
           style={{ background: 'linear-gradient(180deg, #047857 0%, #064E3B 100%)', boxShadow: '0 10px 25px rgba(4,120,87,0.3), 0 0 20px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] uppercase text-emerald-100 tracking-wider font-mono font-bold">Total Revenue</div>
@@ -270,7 +270,7 @@ export const AdminDashboard: React.FC = () => {
         </button>
 
         {/* Orders — blue glossy card */}
-        <button className="text-left rounded-xl p-5 overflow-hidden relative border-2 border-blue-400/30 transition-all hover:-translate-y-0.5"
+        <button className="dashboard-kpi dashboard-kpi-orders text-left rounded-xl p-5 overflow-hidden relative border-2 border-blue-400/30 transition-all hover:-translate-y-0.5"
           style={{ background: 'linear-gradient(180deg, #2563EB 0%, #1E40AF 100%)', boxShadow: '0 10px 25px rgba(37,99,235,0.3), 0 0 20px rgba(59,130,246,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] uppercase text-blue-100 tracking-wider font-mono font-bold">Total Orders</div>
@@ -288,7 +288,7 @@ export const AdminDashboard: React.FC = () => {
         </button>
 
         {/* Products — purple glossy card */}
-        <button className="text-left rounded-xl p-5 overflow-hidden relative border-2 border-purple-400/30 transition-all hover:-translate-y-0.5"
+        <button className="dashboard-kpi dashboard-kpi-products text-left rounded-xl p-5 overflow-hidden relative border-2 border-purple-400/30 transition-all hover:-translate-y-0.5"
           style={{ background: 'linear-gradient(180deg, #7E22CE 0%, #581C87 100%)', boxShadow: '0 10px 25px rgba(126,34,206,0.3), 0 0 20px rgba(147,51,234,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] uppercase text-purple-100 tracking-wider font-mono font-bold">Products</div>
@@ -306,7 +306,7 @@ export const AdminDashboard: React.FC = () => {
         </button>
 
         {/* Low Stock — orange/red glossy card */}
-        <button className="text-left rounded-xl p-5 overflow-hidden relative border-2 border-orange-400/30 transition-all hover:-translate-y-0.5"
+        <button className="dashboard-kpi dashboard-kpi-stock text-left rounded-xl p-5 overflow-hidden relative border-2 border-orange-400/30 transition-all hover:-translate-y-0.5"
           style={{ background: 'linear-gradient(180deg, #EA580C 0%, #9A3412 100%)', boxShadow: '0 10px 25px rgba(234,88,12,0.3), 0 0 20px rgba(249,115,22,0.15), inset 0 1px 0 rgba(255,255,255,0.15)' }}>
           <div className="flex items-center justify-between mb-3">
             <div className="text-[10px] uppercase text-orange-100 tracking-wider font-mono font-bold">Low Stock Alerts</div>

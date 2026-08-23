@@ -88,6 +88,13 @@ export const ProductManagement: React.FC = () => {
 
       // Parse header — strip quotes and lowercase
       const headers = rows[0].map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
+      const titleHeader = headers.includes('name') || headers.includes('title');
+      if (!titleHeader) {
+        addToast('error', 'CSV Invalid', 'CSV must include a Name or Title column.');
+        setCsvUploading(false);
+        e.target.value = '';
+        return;
+      }
 
       // Map category string to our category IDs
       const mapCategory = (catStr: string): string => {
@@ -153,6 +160,8 @@ export const ProductManagement: React.FC = () => {
       // Import in batches of 20 to avoid payload size limits
       const batchSize = 20;
       let totalImported = 0;
+      let failedBatches = 0;
+      let lastImportError = '';
 
       for (let i = 0; i < items.length; i += batchSize) {
         const batch = items.slice(i, i + batchSize);
@@ -163,19 +172,24 @@ export const ProductManagement: React.FC = () => {
             body: JSON.stringify({ items: batch, markupType: 'percentage', markupValue: 25, autoApprove: true }),
           });
           const data = await res.json();
-          if (data.success) {
+          if (res.ok && data.success && data.importJob) {
             totalImported += data.importJob.importedCount;
+          } else {
+            failedBatches++;
+            lastImportError = data.error || `Batch ${Math.floor(i / batchSize) + 1} failed with HTTP ${res.status}.`;
           }
-        } catch {
-          // Continue with next batch
+        } catch (error) {
+          failedBatches++;
+          lastImportError = error instanceof Error ? error.message : 'Network error while importing a batch.';
         }
       }
 
       if (totalImported > 0) {
-        addToast('success', 'CSV Imported', `${totalImported} products imported successfully. Reloading...`);
+        const suffix = failedBatches > 0 ? ` ${failedBatches} batch(es) failed.` : '';
+        addToast('success', 'CSV Imported', `${totalImported} products imported successfully.${suffix} Reloading...`);
         setTimeout(() => window.location.reload(), 2000);
       } else {
-        addToast('error', 'Import Failed', 'No products were imported. Check the CSV format.');
+        addToast('error', 'Import Failed', lastImportError || 'No products were imported. Check the CSV format and server configuration.');
       }
     } catch {
       addToast('error', 'CSV Error', 'Could not parse the CSV file.');

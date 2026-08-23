@@ -96,7 +96,7 @@ export const SmartProjectorsManager: React.FC = () => {
       ],
       projectorSpecs: {
         nativeResolution: form.resolution,
-        brightness: `${form.brightness} ANSI Lumens`,
+        brightness: `${form.lumens} ANSI Lumens`,
         throwRatio: '1.2:1',
         screenSize: '40" - 200"',
         androidTvVersion: 'Android TV 11.0',

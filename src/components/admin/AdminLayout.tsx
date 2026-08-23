@@ -60,6 +60,7 @@ import {
   MessageCircle,
   Palette,
   ChevronDown,
+  Bell,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useAuthStore } from '../../store/useAuthStore';
@@ -316,8 +317,8 @@ export const AdminLayout: React.FC = () => {
   const sidebarContent = (
     <>
       {/* Brand strip + collapse toggle */}
-      <div className="px-5 py-4 border-b border-[#1f2937] flex items-center gap-2.5">
-        <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-12 h-8 object-contain shrink-0" />
+      <div className="px-3 py-4 border-b border-[#1f2937] flex items-center gap-2.5">
+        <img src={brandingLogoUrl} alt="PlayBeat Digital" className="w-[150px] h-12 object-contain shrink-0" />
         <div className="sidebar-brand-text min-w-0 flex-1">
           <div className="text-sm font-bold text-white font-display truncate">PlayBeat Digital</div>
           <div className="text-[10px] text-gray-500 font-mono uppercase tracking-wider">Admin Console</div>
@@ -404,7 +405,7 @@ export const AdminLayout: React.FC = () => {
       {/* ===========================================================
           DESKTOP SIDEBAR (260px or 64px collapsed, fixed)
           =========================================================== */}
-      <aside className={`hidden md:flex flex-col w-[260px] admin-sidebar fixed inset-y-0 left-0 z-30 transition-all duration-200 ${isCollapsed ? 'admin-sidebar-collapsed' : ''}`}>
+      <aside className={`hidden md:flex flex-col w-[200px] admin-sidebar fixed inset-y-0 left-0 z-30 transition-all duration-200 ${isCollapsed ? 'admin-sidebar-collapsed' : ''}`}>
         {sidebarContent}
       </aside>
 
@@ -444,7 +445,7 @@ export const AdminLayout: React.FC = () => {
       {/* ===========================================================
           MAIN COLUMN (offset by sidebar width on desktop)
           =========================================================== */}
-      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${isCollapsed ? 'md:ml-16' : 'md:ml-[260px]'}`}>
+      <div className={`flex-1 flex flex-col min-w-0 transition-all duration-200 ${isCollapsed ? 'md:ml-16' : 'md:ml-[200px]'}`}>
         {/* ---- TOP HEADER BAR ---- */}
         <header className="sticky top-0 z-20 bg-[#0f1115]/95 backdrop-blur-md border-b border-[#1f2937] px-4 sm:px-6 h-[60px] flex items-center justify-between gap-3">
           {/* Left side: hamburger + ALL CATEGORIES dropdown + breadcrumb */}
@@ -458,7 +459,7 @@ export const AdminLayout: React.FC = () => {
             </button>
 
             {/* ALL CATEGORIES dropdown */}
-            <div className="relative">
+            <div className="relative hidden">
               <button
                 onClick={() => setIsCategoryMenuOpen((v) => !v)}
                 className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-blue-400 hover:text-blue-300 transition-colors"
@@ -506,6 +507,11 @@ export const AdminLayout: React.FC = () => {
             </div>
 
             {/* Breadcrumb / Title */}
+            <div className="relative hidden sm:block w-60">
+              <input aria-label="Search dashboard" placeholder="Search anything..." className="w-full h-9 rounded-lg bg-[#0b1426] border border-[#26334a] px-10 text-xs text-white placeholder:text-gray-500 focus:outline-none focus:border-blue-500/60" />
+              <span className="absolute left-3 top-2 text-gray-500">⌕</span>
+              <span className="absolute right-2 top-2 text-[9px] text-gray-600 border border-[#26334a] rounded px-1">CTRL /</span>
+            </div>
             <div className="hidden sm:flex items-center gap-2 text-sm">
               <span className="text-gray-600">/</span>
               <span className="text-white font-semibold truncate">{activeLabel}</span>
@@ -516,29 +522,30 @@ export const AdminLayout: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             <button
               onClick={() => setActiveView('store')}
-              className="btn-glossy btn-glossy-cyan btn-glossy-sm"
+              className="btn-glossy btn-glossy-yellow btn-glossy-sm !text-black"
             >
-              <span className="hidden sm:inline">Storefront</span>
+              <Store className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline normal-case tracking-normal">Storefront</span>
             </button>
 
             <button
               onClick={() => setIsAuthModalOpen(true)}
-              className="btn-glossy btn-glossy-yellow btn-glossy-sm"
+              className="hidden sm:flex items-center gap-2 rounded-lg bg-[#0b1426] border border-[#26334a] px-3 py-1.5 text-left"
               aria-label={`Signed in as ${currentUser.role}`}
             >
-              <span className="w-4 h-4 rounded-full bg-black/20 text-black flex items-center justify-center text-[10px] font-bold">
+              <span className="w-7 h-7 rounded-full bg-[#102e65] text-blue-200 flex items-center justify-center text-xs font-bold border border-blue-400/30">
                 {currentUser.name.charAt(0).toUpperCase()}
               </span>
-              <span className="hidden sm:inline">Admin Panel</span>
+              <span><span className="block text-[11px] text-white font-semibold normal-case tracking-normal">PlayBeat Admin</span><span className="block text-[9px] text-gray-500 normal-case tracking-normal">Administrator</span></span>
+              <ChevronDown className="w-3 h-3 text-gray-500" />
             </button>
 
             <button
-              onClick={() => setAdminTab('support-tickets')}
-              className="btn-glossy btn-glossy-pink btn-glossy-sm"
-              title="View storefront support queries & tickets"
+              onClick={() => addToast('info', 'Notifications', 'You are all caught up.')}
+              className="p-2 text-gray-400 hover:text-white"
+              title="Notifications"
             >
-              <Headphones className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">Live Support</span>
+              <Bell className="w-4 h-4" />
             </button>
           </div>
         </header>
